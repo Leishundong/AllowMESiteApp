@@ -1,0 +1,34 @@
+{
+  "LinkerImg":{
+     "Logo":{
+       "id":"Logo",
+       "land":"/login",
+       "src":"./static/img/LOGO2.png",
+       "size":"561×165"
+     },
+    "BarCode":{
+      "id":"BarCode",
+      "land":"/searchBar",
+      "src":"./static/img/BarCode.png",
+      "size":"100×60"
+    },
+    "Inbound":{
+      "id":"Inbound",
+      "land":"/bodyFunction",
+      "src":"./static/img/Inbound.png",
+      "size":"100×60"
+    },
+    "HangUp":{
+      "id":"HangUp",
+      "land":"/bodyFunction",
+      "src":"./static/img/HangUp.png",
+      "size":"100×60"
+    },
+    "SetUp":{
+      "id":"SetUp",
+      "land":"/bodyFunction",
+      "src":"./static/img/SetUp.png",
+      "size":"100×60"
+    }
+  }
+}

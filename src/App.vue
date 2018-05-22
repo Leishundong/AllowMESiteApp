@@ -1,19 +1,23 @@
 <template>
-  <div id="app">
+  <div id="app" style="height: 100%">
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-  import Tab from 'components/tab/tab';
 export default {
-  name: 'App',
-  components:{
-      Tab
-  }
+  name: 'App'
 }
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
   @import "~common/css/base";
+  @import "../static/img/iconfont/iconfont.css";
+  @font-face{
+    font-family: 微软雅黑常规;
+    src: url('../static/font/MicrosoftYaHei.ttf');
+  }
+  body{
+    font-family: $General-font;
+  }
 </style>
