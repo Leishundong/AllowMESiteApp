@@ -7,6 +7,13 @@ import store from './store';
 import 'common/js/flexible';
 
 
+import {Alert,Loading,Msg} from 'vue-mobile-element';
+Vue.use(Loading);
+Vue.prototype.$alert=Alert;
+Vue.prototype.$loading=Loading.service;
+Vue.prototype.$msg=Msg;
+
+
 Vue.config.productionTip = false;
 fastclick.attach(document.body);
 
