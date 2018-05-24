@@ -1,12 +1,12 @@
 <template>
   <div class="bar-box">
-    <div class="left-button" v-if="isshow">
-      <span v-text="leftbutton"></span>
-      <span class="title" v-text="title"></span>
+    <div class="left-button" v-if="IsShow">
+      <span v-text="LeftButton"></span>
+      <span class="title" v-text="Title"></span>
     </div>
-    <div class="left-button" v-if="!isshow">
-      <span  v-text="leftbutton" @click="goBack()"></span>
-      <span class="title" v-text="title"></span>
+    <div class="left-button" v-if="!IsShow">
+      <span  v-text="LeftButton" @click="goBack()"></span>
+      <span class="title" v-text="Title"></span>
     </div>
   </div>
 </template>
@@ -14,9 +14,9 @@
   export default {
     data(){
       return{
-        isshow:true,
-        leftbutton:'',
-        title:''
+        IsShow:true,
+        LeftButton:'',
+        Title:''
       }
     },
     created(){
@@ -32,19 +32,21 @@
         this.$router.go(-1)
       },
       titleName(){
-        if(this.$route.name == 'home'){
-          this.isshow = true;
-          this.leftbutton = '注销'
+        if(this.$route.name == 'Home'){
+          this.IsShow = true;
+          this.LeftButton = '注销'
         }else{
-          this.isshow = false;
-          this.leftbutton = '返回'
+          this.IsShow = false;
+          this.LeftButton = '返回'
         };
-        if(this.$route.name == 'home'){
-          this.title = '功能菜单';
+        if(this.$route.name == 'Home'){
+          this.Title = '功能菜单';
         }else if(this.$route.name == 'Inbound'){
-          this.title = '衣物入站';
+          this.Title = '衣物入站';
         }else if(this.$route.name == 'Details'){
-          this.title = '订单详情';
+          this.Title = '订单详情';
+        }else if(this.$route.name == 'AddClothes'){
+          this.Title = '添加衣物';
         }
       },
     },

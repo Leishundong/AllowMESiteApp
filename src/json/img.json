@@ -16,19 +16,25 @@
       "id":"Inbound",
       "land":"/bodyFunction",
       "src":"./static/img/Inbound.png",
-      "size":"100×60"
+      "size":"213×164"
     },
     "HangUp":{
       "id":"HangUp",
       "land":"/bodyFunction",
       "src":"./static/img/HangUp.png",
-      "size":"100×60"
+      "size":"213×164"
     },
     "SetUp":{
       "id":"SetUp",
       "land":"/bodyFunction",
       "src":"./static/img/SetUp.png",
-      "size":"100×60"
+      "size":"213×164"
+    },
+    "Dial":{
+      "id":"Dial",
+      "land":"/inBound",
+      "src":"./static/img/拨打.png",
+      "size":"92×97"
     }
   }
 }

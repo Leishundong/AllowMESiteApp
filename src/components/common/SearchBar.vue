@@ -13,7 +13,7 @@
 <script>
   import imgData from "../../json/img.json"
   export default {
-    name:'searchBar',
+    name:'SearchBar',
     data(){
       return{
         BarCodeImg:''

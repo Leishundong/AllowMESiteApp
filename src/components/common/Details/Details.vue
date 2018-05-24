@@ -1,15 +1,15 @@
 <template>
   <div class="details-box">
     <head-bar></head-bar>
-    <fun-module v-bind:WhereFrom = "WhereFrom" v-bind:OrderNumber = "OrderNumber"></fun-module>
-    <detail-list v-bind:WhereFrom = "WhereFrom" v-bind:OrderNumber = "OrderNumber"></detail-list>
+    <fun-module v-bind:WhereFrom = "WhereFrom" v-bind:OrderNumber = "OrderNumber" v-if="WhereFrom!=''"></fun-module>
+    <detail-list v-bind:WhereFrom = "WhereFrom" v-bind:OrderNumber = "OrderNumber" v-if="WhereFrom!=''"></detail-list>
   </div>
 
 </template>
 <script>
-  import HeadBar from "../home/headBar.vue"
-  import FunModule from "./functionModule.vue"
-  import DetailList from "./detailList.vue"
+  import HeadBar from "../HeadBar.vue"
+  import FunModule from "./FunctionModule.vue"
+  import DetailList from "./DetailList.vue"
   export default {
     components:{
       HeadBar,
@@ -22,14 +22,25 @@
         OrderNumber:'',
       }
     },
-    created(){
-      this.getParmes();
+    beforeRouteLeave(to,from,next){
+      if(to.name == "Inbound"){
+        this.WhereFrom='';
+        this.OrderNumber='';
+      }
+      next();
+    },
+    beforeRouteEnter (to, from, next) {
+      next(vm => {
+        if( vm.OrderNumber==''){
+          vm.OrderNumber = to.params.OrderName;
+          vm.WhereFrom = to.params.from;
+        }
+      })
     },
     methods:{
       getParmes(){
         this.WhereFrom=this.$route.params.from;
         this.OrderNumber=this.$route.params.OrderName;
-        console.log(this.WhereFrom);
       }
     }
   }

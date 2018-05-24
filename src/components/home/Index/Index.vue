@@ -7,11 +7,11 @@
   </div>
 </template>
 <script>
-  import HeadBar from "../headBar.vue"
-  import SerchBar from "../searchBar.vue"
-  import BodyFunction from "../bodyFunction.vue"
+  import HeadBar from "../../Common/HeadBar.vue"
+  import SerchBar from "../../Common/SearchBar.vue"
+  import BodyFunction from "../BodyFunction.vue"
   export default {
-    name:'home',
+    name:'Home',
     components:{
       HeadBar,
       SerchBar,
@@ -31,7 +31,7 @@
   @import "~common/css/mixin";
   @import "~common/css/variable";
   .home-box{
-    background: #E1F2FC;
+    background: $color-background-big;
     height: 100%;
   }
 </style>

@@ -1,6 +1,6 @@
 <template>
-  <div class="body-box">
-    <div class="router-box" v-if="isshow">
+  <div class="body-box" v-if="Isshow">
+    <div class="router-box">
       <div class="router-link" @click="toInbound()">
         <div class="center">
           <img :src="InboundImg"/>
@@ -36,12 +36,17 @@
         InboundImg:'',
         HangUpImg:'',
         SetUpImg:'',
-        isshow:true,
+        Isshow:true,
+      }
+    },
+    watch:{
+      '$route'(){
+        this.toShow()
       }
     },
     created(){
       this.getImg();
-      this.isshow=true;
+      this.toShow()
     },
     methods:{
       getImg(){
@@ -51,7 +56,15 @@
       },
       toInbound(){
         this.$router.push({ name: 'Inbound', params: { userId:'1' }});
-        this.isshow = false;
+        this.Isshow = false;
+      },
+      toShow(){
+        if(this.$route.name == 'Home'){
+          this.Isshow = true
+        }else {
+          this.Isshow = false
+        }
+
       }
     },
   }

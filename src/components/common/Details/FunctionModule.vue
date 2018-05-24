@@ -1,6 +1,6 @@
 <template>
   <div class="fuction-box">
-    <div class="Site-box" v-if="WhereFrom=='Site'">
+    <div class="Site-box" v-if="From=='Site'">
       <div class="one-box" @click="toAddClothes()">
         <div class="box">
           <div class="top"><i class="iconfont icon-xinjiantianjiabiaodanyemian img"></i></div>
@@ -14,7 +14,7 @@
         <p>添加详情</p>
       </div>
     </div>
-    <div class="HangUp-box" v-if="WhereFrom=='HangUp'">
+    <div class="HangUp-box" v-if="From=='HangUp'">
       <div class="one-box">
         <div class="box">
           <div class="top"><i class="iconfont icon-liebiaolist29 imglist"></i></div>
@@ -34,8 +34,13 @@
   export default {
     data(){
       return{
-
+        From:'',
+        orderNumber:'',
       }
+    },
+    created(){
+      this.From=this.WhereFrom;
+      this.orderNumber=this.OrderNumber;
     },
     props:{
       OrderNumber:{
@@ -49,7 +54,7 @@
     },
     methods:{
       toAddClothes(){
-        
+        this.$router.push({ name: 'AddClothes', params: { OrderName:this.orderNumber,from:this.From }});
       }
     }
   }
@@ -59,7 +64,7 @@
   @import "~common/css/variable";
   @font-face {
     font-family: MRBlod;
-    src: url('../../../static/font/MRBlod.ttf');
+    src: url('../../../../static/font/MRBlod.ttf');
   }
   .fuction-box{
     margin-top: px2rem(41);

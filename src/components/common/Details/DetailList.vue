@@ -41,8 +41,9 @@
   </div>
 </template>
 <script>
-  import Data from "../../json/tsconfig.json"
+  import Data from "../../../json/tsconfig.json"
   export default {
+    name:'DetailList',
     data(){
       return{
         OrderData:[],
@@ -69,8 +70,7 @@
             this.OrderData = item;
           }
         });
-        console.log(this.OrderData);
-      }
+      },
     }
   }
 </script>
@@ -79,7 +79,7 @@
   @import "~common/css/variable";
   @font-face {
     font-family: MRBlod;
-    src: url('../../../static/font/MRBlod.ttf');
+    src: url('../../../../static/font/MRBlod.ttf');
   }
   .lists-box{
     margin-top: px2rem(62);

@@ -7,12 +7,13 @@ Vue.use(Router);
 const _import = require('./_import_' + process.env.NODE_ENV);
 
 let constantRouterMap=[
-  {path:'/',redirect:'/home'},
-  {path:'/login',component:_import('login/login')},
-  {path:'/home',name:'home',component:_import('home/index/index'),children:[
-    {path:'/Inbound',name:'Inbound',component:_import('inBound/inBound/inBound')}
+  {path:'/',redirect:'/Home'},
+  {path:'/Login',component:_import('Login/Login')},
+  {path:'/Home',name:'Home',component:_import('Home/Index/Index'),children:[
+    {path:'/Inbound',name:'Inbound',component:_import('InBound/InBound/InBound')}
   ]},
-  {path:'/cs',component:_import('cs/index/index')}
+  {path:'/Details',name:'Details',component:_import('Common/Details/Details'),meta:{keepAlive:true}},
+  {path:'/AddClothes',name:'AddClothes',component:_import('InBound/AddClothes/AddClothes')},
 ];
 
 export default new Router({

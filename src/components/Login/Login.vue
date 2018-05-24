@@ -9,7 +9,7 @@
 </template>
 <script>
   import imgData from "../../json/img.json"
-  import LoginModule from "./login-module.vue"
+  import LoginModule from "./LoginModule.vue"
   export default {
     name: 'Login',
     components:{
