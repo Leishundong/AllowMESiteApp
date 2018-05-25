@@ -13,7 +13,8 @@ let constantRouterMap=[
     {path:'/Inbound',name:'Inbound',component:_import('InBound/InBound/InBound')}
   ]},
   {path:'/Details',name:'Details',component:_import('Common/Details/Details'),meta:{keepAlive:true}},
-  {path:'/AddClothes',name:'AddClothes',component:_import('InBound/AddClothes/AddClothes')},
+  {path:'/AddClothes',name:'AddClothes',component:_import('InBound/AddClothes/AddClothes'),meta:{keepAlive:true}},
+  {path:'/AddChildren',name:'AddChildren',component:_import('InBound/AddClothes/AddChildren')}
 ];
 
 export default new Router({

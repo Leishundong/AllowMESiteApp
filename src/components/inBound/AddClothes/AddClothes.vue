@@ -1,8 +1,8 @@
 <template>
   <div class="clothes-box">
     <head-bar></head-bar>
-    <clothes-list></clothes-list>
-    <foot-bar></foot-bar>
+    <clothes-list v-on:Select-Data="getSelect"></clothes-list>
+    <foot-bar v-bind:SelectData = "SelectData"></foot-bar>
   </div>
 </template>
 <script>
@@ -17,11 +17,13 @@
     },
     data(){
       return{
-
+        SelectData:''
       }
     },
     methods:{
-
+      getSelect(Data){
+        this.SelectData = Data;
+      }
     },
   }
 </script>

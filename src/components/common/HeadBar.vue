@@ -45,7 +45,7 @@
           this.Title = '衣物入站';
         }else if(this.$route.name == 'Details'){
           this.Title = '订单详情';
-        }else if(this.$route.name == 'AddClothes'){
+        }else if(this.$route.name == 'AddClothes'||this.$route.name == 'AddChildren'){
           this.Title = '添加衣物';
         }
       },
