@@ -28,7 +28,6 @@
     methods:{
       getDatas(){
         this.SelectData=this.$route.params.SelectData;
-        console.log(this.SelectData);
       }
     }
   }

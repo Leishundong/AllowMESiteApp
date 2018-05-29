@@ -17,12 +17,14 @@
     },
     data(){
       return{
-        SelectData:''
+        SelectData:'',
       }
     },
     methods:{
       getSelect(Data){
-        this.SelectData = Data;
+        if(Data!=''){
+          this.SelectData = Data;
+        }
       }
     },
   }

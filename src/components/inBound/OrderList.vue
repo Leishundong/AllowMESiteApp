@@ -101,7 +101,6 @@
               color: $color-background-d;
             }
           }
-
         }
         .message-box{
           float: left;

@@ -47,6 +47,12 @@
           this.Title = '订单详情';
         }else if(this.$route.name == 'AddClothes'||this.$route.name == 'AddChildren'){
           this.Title = '添加衣物';
+        }else if(this.$route.name == 'AddDetails'){
+          this.Title = '衣物详情';
+        }else if(this.$route.name == 'ClothesList'){
+          this.Title = '衣物列表';
+        }else if(this.$route.name == 'Receipt'){
+          this.Title = '小票预览';
         }
       },
     },

@@ -14,7 +14,11 @@ let constantRouterMap=[
   ]},
   {path:'/Details',name:'Details',component:_import('Common/Details/Details'),meta:{keepAlive:true}},
   {path:'/AddClothes',name:'AddClothes',component:_import('InBound/AddClothes/AddClothes'),meta:{keepAlive:true}},
-  {path:'/AddChildren',name:'AddChildren',component:_import('InBound/AddClothes/AddChildren')}
+  {path:'/AddChildren',name:'AddChildren',component:_import('InBound/AddClothes/AddChildren')},
+  {path:'/AddDetails',name:'AddDetails',component:_import('InBound/AddDetails/AddDetails')},
+  {path:'/ClothesList',name:'ClothesList',component:_import('InBound/ClothesList/ClothesList')},
+  {path:'/Receipt',name:'Receipt',component:_import('InBound/Receipt/Receipt')},
+  {path:'/HangUp',name:'HangUp',component:_import('HangUp/HangUp')}
 ];
 
 export default new Router({

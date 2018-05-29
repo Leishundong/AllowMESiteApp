@@ -1,13 +1,13 @@
 <template>
   <div class="fuction-box">
     <div class="Site-box" v-if="From=='Site'">
-      <div class="one-box" @click="toAddClothes()">
+      <div class="one-box" @click="toAddClothes">
         <div class="box">
           <div class="top"><i class="iconfont icon-xinjiantianjiabiaodanyemian img"></i></div>
         </div>
         <p>添加衣物</p>
       </div>
-      <div class="two-box">
+      <div class="two-box" @click="toAddDetails">
         <div class="box">
           <div class="top"><i class="iconfont icon-weibiaoti1 imgcom"></i></div>
         </div>
@@ -55,6 +55,9 @@
     methods:{
       toAddClothes(){
         this.$router.push({ name: 'AddClothes', params: { OrderName:this.orderNumber,from:this.From }});
+      },
+      toAddDetails(){
+        this.$router.push({name:'ClothesList',params: { OrderName:this.orderNumber,from:this.From }})
       }
     }
   }

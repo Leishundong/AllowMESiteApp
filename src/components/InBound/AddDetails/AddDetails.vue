@@ -1,0 +1,55 @@
+<template>
+  <div class="add-details-box">
+    <head-bar></head-bar>
+    <search-bar></search-bar>
+    <clothes-details></clothes-details>
+    <details-image></details-image>
+    <foot-bar></foot-bar>
+  </div>
+</template>
+<script>
+  import HeadBar from '../../Common/HeadBar.vue'
+  import SearchBar from '../../Common/SearchBar.vue'
+  import ClothesDetails from './ClothesDetails.vue'
+  import DetailsImage from './DetailsImage.vue'
+  import FootBar from '../../Common/FootBar.vue'
+  export default {
+    name:'AddDetails',
+    components:{
+      HeadBar,
+      SearchBar,
+      ClothesDetails,
+      DetailsImage,
+      FootBar
+    },
+    data(){
+      return{
+        OrderNumber:'',
+        WhereFrom:''
+      }
+    },
+    created(){
+    },
+    beforeRouteEnter (to, from, next) {
+      next(vm => {
+        if( vm.OrderNumber==''){
+          vm.OrderNumber = to.params.OrderName;
+          vm.WhereFrom = to.params.From;
+          console.log(1);
+          console.log(vm.OrderNumber);
+        }
+      })
+    },
+    methods:{
+
+    }
+  }
+</script>
+<style lang="scss" rel="stylesheet/scss" scoped>
+  @import "~common/css/mixin";
+  @import "~common/css/variable";
+  .add-details-box{
+    background: $color-background-big;
+    height: 100%;
+  }
+</style>

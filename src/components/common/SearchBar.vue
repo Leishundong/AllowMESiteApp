@@ -1,12 +1,18 @@
 <template>
   <div class="search-box">
-    <span class="span-message">请输入订单编号或手机号</span>
-    <div class="search-lan">
+    <span class="span-message" v-text="Message"></span>
+    <div class="search-lan" v-if="ShowBar">
       <div class="img-box">
         <img class="img" :src="BarCodeImg"/>
       </div>
       <input/>
       <span class="button"><div class="span"><span>搜索</span></div></span>
+    </div>
+    <div class="search-lan" v-else>
+      <input class="add-details"/>
+      <div class="img-box">
+        <img class="img" :src="BarCodeImg"/>
+      </div>
     </div>
   </div>
 </template>
@@ -16,15 +22,32 @@
     name:'SearchBar',
     data(){
       return{
-        BarCodeImg:''
+        BarCodeImg:'',
+        Message:'',
+        ShowBar:'',
       }
     },
     created(){
       this.getImg();
+      this.modify();
+    },
+    watch:{
+      '$route'(){
+        this.modify();
+      }
     },
     methods:{
       getImg(){
         this.BarCodeImg = imgData.LinkerImg.BarCode.src;
+      },
+      modify(){
+        if(this.$route.name=='Home'||this.$route.name=='Inbound'){
+          this.Message = '请输入订单编号或手机号'
+          this.ShowBar = true;
+        }else if(this.$route.name == 'AddDetails'){
+          this.Message = '请输入衣物条码';
+          this.ShowBar = false;
+        }
       }
     },
   }
@@ -41,6 +64,7 @@
     }
     .search-lan{
       height: px2rem(73);
+      margin-top: px2rem(20);
       .img-box{
         float: left;
         width: px2rem(165);
@@ -52,6 +76,10 @@
           width: px2rem(100);
           height: px2rem(60);
         }
+      }
+      .add-details{
+        width: px2rem(518);
+        margin-left: px2rem(0);
       }
       input{
         float: left;

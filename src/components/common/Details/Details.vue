@@ -34,6 +34,7 @@
         if( vm.OrderNumber==''){
           vm.OrderNumber = to.params.OrderName;
           vm.WhereFrom = to.params.from;
+          console.log(1)
         }
       })
     },

@@ -1,19 +1,19 @@
 <template>
   <div class="body-box" v-if="Isshow">
     <div class="router-box">
-      <div class="router-link" @click="toInbound()">
+      <div class="router-link" @click="toInbound">
         <div class="center">
           <img :src="InboundImg"/>
           <p>入站</p>
         </div>
       </div>
-      <div class="router-link router-left">
+      <div class="router-link router-left" @click="toHangUp">
         <div class="center">
           <img :src="HangUpImg"/>
           <p>上挂</p>
         </div>
       </div>
-      <div class="router-link router-top">
+      <div class="router-link router-top" @click="toHangUps">
         <div class="center">
           <img :src="HangUpImg"/>
           <p>整单上挂</p>
@@ -57,6 +57,9 @@
       toInbound(){
         this.$router.push({ name: 'Inbound', params: { userId:'1' }});
         this.Isshow = false;
+      },
+      toHangUp(){
+        this.$router.push({ name: 'HangUp', params: { userId:'1' }});
       },
       toShow(){
         if(this.$route.name == 'Home'){
