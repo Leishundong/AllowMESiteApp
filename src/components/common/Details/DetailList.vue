@@ -15,7 +15,7 @@
       <p>付款状态:</p>
       <p>物流备注:</p>
       <p>支付类型:</p>
-      <p v-if="WhereFrom=='HangUP'">入站备注:</p>
+      <p v-if="Where!='InBound'">入站备注:</p>
     </div>
     <div class="data">
       <p v-text="OrderData['物流编号']"></p>
@@ -32,7 +32,7 @@
       <p v-text="OrderData['付款状态']"></p>
       <p v-text="OrderData['物流备注']"></p>
       <p v-text="OrderData['支付类型']"></p>
-      <p v-text="OrderData['入站备注']" v-if="WhereFrom=='HangUP'"></p>
+      <p v-text="OrderData['入站备注']" v-if="Where!='InBound'"></p>
     </div>
     <div class="dial">
       <p>拨打</p>
@@ -47,6 +47,7 @@
     data(){
       return{
         OrderData:[],
+        Where:'',
       }
     },
     props:{
@@ -65,6 +66,7 @@
     methods:{
       getData(){
         let arr = Data.linkerName;
+        this.Where=this.WhereFrom;
         arr.forEach((item,index)=>{
           if(item['订单编号']==this.OrderNumber){
             this.OrderData = item;

@@ -47,6 +47,9 @@
         }else if(this.$route.name == 'AddDetails'){
           this.Message = '请输入衣物条码';
           this.ShowBar = false;
+        }else if(this.$route.name == 'HangUp'||this.$route.name == 'HangUps'){
+          this.Message = '请输入衣物编号';
+          this.ShowBar = true;
         }
       }
     },

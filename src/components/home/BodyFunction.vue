@@ -55,11 +55,14 @@
         this.SetUpImg = imgData.LinkerImg.SetUp.src;
       },
       toInbound(){
-        this.$router.push({ name: 'Inbound', params: { userId:'1' }});
+        this.$router.push({ name: 'Inbound', params: { from:'InBound' }});
         this.Isshow = false;
       },
       toHangUp(){
-        this.$router.push({ name: 'HangUp', params: { userId:'1' }});
+        this.$router.push({ name: 'Inbound', params: { from:'HangUp' }});
+      },
+      toHangUps(){
+        this.$router.push({ name: 'HangUps',params: { from:'HangUps' }});
       },
       toShow(){
         if(this.$route.name == 'Home'){

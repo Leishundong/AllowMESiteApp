@@ -7,7 +7,7 @@
       <button class="span" @click="finishAdd" v-if="!IsShow">完成添加</button>
     </div>
     <div v-if="!AddClothes">
-      <button class="span" @click="finishEdit" v-if="IsShow">完成编辑</button>
+      <button class="span" @click="finishEdit" v-if="IsShow">{{this.Message}}</button>
       <div class="clothes-list" v-if="!IsShow">
         <div v-if="TwoShow">
           <button class="edit">添加备注</button><button class="write" @click="toReceipt">打印</button><button class="inBound">确认入站</button>
@@ -27,6 +27,7 @@
         IsShow:'',
         AddClothes:'',
         TwoShow:'',
+        Message:''
       }
     },
     props:{
@@ -58,7 +59,8 @@
         }else if(this.$route.name == 'AddDetails'){
           this.TwoShow = true;
           this.IsShow = true;
-          this.AddClothes = false
+          this.AddClothes = false;
+          this.Message = '完成编辑'
         }else if(this.$route.name == 'Receipt'){
           this.TwoShow = false;
           this.IsShow = false;
@@ -67,13 +69,23 @@
           this.TwoShow = true;
           this.IsShow = false;
           this.AddClothes = false
+        }else if(this.$route.name == 'HangUpClothes'){
+          this.TwoShow = true;
+          this.IsShow = true;
+          this.AddClothes = false;
+          this.Message = '衣物上挂'
         }
       },
       finishAdd(){
         this.$router.push({name:'Details'});
       },
       finishEdit(){
-        this.$router.push({name: 'ClothesList'});
+        if(this.$route.name == 'AddDetails'){
+          this.$router.push({name: 'ClothesList'});
+        }
+        if(this.$route.name == 'HangUpClothes'){
+          this.$router.push({name: 'ClothesList',params: { from:'HangUp'}});
+        }
       },
       toReceipt(){
         this.$router.push({name: 'Receipt'});

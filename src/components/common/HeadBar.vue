@@ -53,6 +53,12 @@
           this.Title = '衣物列表';
         }else if(this.$route.name == 'Receipt'){
           this.Title = '小票预览';
+        }else if(this.$route.name == 'HangUp'){
+          this.Title = '衣物上挂';
+        }else if(this.$route.name == 'HangUpClothes'){
+          this.Title = '衣物上挂';
+        } else if(this.$route.name == 'HangUps'){
+          this.Title = '整单上挂';
         }
       },
     },

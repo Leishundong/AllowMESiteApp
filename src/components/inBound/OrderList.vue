@@ -1,7 +1,7 @@
 <template>
   <div class="list-box">
     <div class="list" v-for="Order in OrderLister">
-      <div class="list-bar"><div class="top">{{Order['订单编号']}}</div></div>
+      <div class="list-bar"><div class="top">{{Order['订单编号']}}<span class="payment" v-if="Show">{{Order['付款状态']}}</span><span class="fen" v-if="Show">1/2</span></div></div>
       <div class="list-body" @click="toDetails(Order['订单编号'])">
         <div class="img-box">
          <div class="top">
@@ -38,13 +38,29 @@
       return{
         Dial:'',
         OrderLister:[],
+        Where:''
       }
     },
     created(){
       this.getImg();
       this.getData();
+      this.Where=this.WhereFrom;
     },
-
+    computed:{
+      Show(){
+       if(this.Where=='InBound'){
+         return false
+       }else {
+         return true
+       }
+      }
+    },
+    props:{
+      WhereFrom:{
+        type:String,
+        required:true
+      }
+    },
     methods:{
       getImg(){
         this.Dial=imgData.LinkerImg.Dial.src;
@@ -54,7 +70,10 @@
       },
       toDetails(el){
         let OrderName = el;
-        this.$router.push({ name: 'Details', params: { OrderName:OrderName,from:'Site' }});
+        if(this.Where == 'HangUps'){
+        }else {
+          this.$router.push({ name: 'Details', params: { OrderName:OrderName,from:this.Where }});
+        }
       }
     }
   }
@@ -64,12 +83,23 @@
   @import "~common/css/variable";
   .list-box{
     margin-top: px2rem(43);
+    text-align: center;
     .list{
       width: 100%;
       .list-bar{
         width: 100%;
         height:px2rem(63);
         background: $color-background-general;
+        .payment{
+          margin-left: px2rem(171);
+          color: #FFF61B;
+          @include font(2)
+        }
+        .fen{
+          margin-left: px2rem(123);
+          color: white;
+          @include font(2)
+        }
         .top{
           float: left;
           margin-left: px2rem(14);

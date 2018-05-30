@@ -1,7 +1,7 @@
 <template>
   <div class="inBound-box">
     <span class="span">待入站订单</span>
-    <order-list></order-list>
+    <order-list v-bind:WhereFrom="WhereFrom" v-if="WhereFrom!=''"></order-list>
   </div>
 </template>
 <script>
@@ -12,8 +12,22 @@
     },
     data(){
       return{
-
+        WhereFrom:'',
       }
+    },
+    beforeRouteLeave(to,from,next){
+      if(to.name == "Home"){
+        this.WhereFrom='';
+      }
+      next();
+    },
+    beforeRouteEnter (to, from, next) {
+      next(vm => {
+        if( vm.WhereFrom==''){
+          vm.WhereFrom = to.params.from;
+          console.log(vm.WhereFrom)
+        }
+      })
     },
     methods:{
 
