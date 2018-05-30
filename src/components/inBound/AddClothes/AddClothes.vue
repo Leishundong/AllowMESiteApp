@@ -17,12 +17,13 @@
     },
     data(){
       return{
-        SelectData:'',
+        SelectData:['测试'],
       }
     },
     methods:{
       getSelect(Data){
         if(Data!=''){
+          this.SelectData=[];
           this.SelectData = Data;
         }
       }
