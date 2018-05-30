@@ -36,6 +36,7 @@
       return{
         From:'',
         orderNumber:'',
+        SelectData:'',
       }
     },
     created(){
@@ -50,6 +51,10 @@
       WhereFrom:{
         type:String,
         required:true
+      },
+      FinishSelect:{
+        type:Array,
+        required:true
       }
     },
     methods:{
@@ -57,7 +62,7 @@
         this.$router.push({ name: 'AddClothes', params: { OrderName:this.orderNumber,from:this.From }});
       },
       toAddDetails(){
-        this.$router.push({name:'ClothesList',params: { OrderName:this.orderNumber,from:this.From }})
+        this.$router.push({name:'ClothesList',params: { OrderName:this.orderNumber,from:this.From,SelectData:this.FinishSelect }})
       },
       toList(){
         this.$router.push({name:'ClothesList',params: { OrderName:this.orderNumber,from:this.From }})
