@@ -5,9 +5,9 @@
       <div class="list-body" @click="toDetails(Order)">
         <div class="img-box">
          <div class="top">
-           <i class="iconfont icon-yifu general" v-if="Order.createactorid.indexOf('A02') != -1"></i>
-           <i class="iconfont icon-bag_icon general" v-if="Order.createactorid.indexOf('A03') != -1"></i>
-           <i class="iconfont icon-shafa general" v-if="Order.createactorid.indexOf('A01') != -1"></i>
+           <i class="iconfont icon-yifu general" v-if="Order.id.indexOf('A03') != -1"></i>
+           <i class="iconfont icon-bag_icon general" v-if="Order.createactorid.indexOf('A10') != -1"></i>
+           <i class="iconfont icon-shafa general" v-if="Order.createactorid.indexOf('A13') != -1"></i>
          </div>
         </div>
         <div class="message-box">
