@@ -7,7 +7,7 @@
 </template>
 <script>
   import HeadBar from "../../Common/HeadBar.vue"
-  import ClothesList from "./ClothesList.vue"
+  import ClothesList from "./ClothesTable.vue"
   import FootBar from "../../Common/FootBar.vue"
   export default {
     components:{
@@ -23,7 +23,6 @@
     methods:{
       getSelect(Data){
         if(Data!=''){
-          this.SelectData=[];
           this.SelectData = Data;
         }
       }

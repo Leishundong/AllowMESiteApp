@@ -1,7 +1,7 @@
 <template>
   <div class="details-box">
     <head-bar></head-bar>
-    <fun-module v-bind:WhereFrom = "WhereFrom" v-bind:OrderNumber = "OrderNumber" v-if="WhereFrom!=''"></fun-module>
+    <fun-module v-bind:WhereFrom = "WhereFrom" v-bind:OrderNumber = "OrderNumber" v-bind:FinishSelect = "FinishSelect" v-if="WhereFrom!=''"></fun-module>
     <detail-list v-bind:WhereFrom = "WhereFrom" v-bind:OrderNumber = "OrderNumber" v-if="WhereFrom!=''"></detail-list>
   </div>
 
@@ -20,6 +20,7 @@
       return{
         WhereFrom:'',
         OrderNumber:'',
+        FinishSelect:['测试']
       }
     },
     beforeRouteLeave(to,from,next){
@@ -34,7 +35,12 @@
         if( vm.OrderNumber==''){
           vm.OrderNumber = to.params.OrderName;
           vm.WhereFrom = to.params.from;
-          console.log(1)
+        }if(from.name=='AddChildren'){
+          vm.FinishSelect = [];
+          vm.FinishSelect = to.params.SelectData;
+          console.log( vm.FinishSelect);
+          console.log( vm.WhereFrom);
+          console.log( vm.OrderNumber);
         }
       })
     },

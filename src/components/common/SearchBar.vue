@@ -6,7 +6,7 @@
         <img class="img" :src="BarCodeImg"/>
       </div>
       <input/>
-      <span class="button"><div class="span"><span>搜索</span></div></span>
+      <span class="button" @click="orderSelect"><div class="span"><span>搜索</span></div></span>
     </div>
     <div class="search-lan" v-else>
       <input class="add-details"/>
@@ -40,6 +40,9 @@
       getImg(){
         this.BarCodeImg = imgData.LinkerImg.BarCode.src;
       },
+      orderSelect(){
+
+      },
       modify(){
         if(this.$route.name=='Home'||this.$route.name=='Inbound'){
           this.Message = '请输入订单编号或手机号'
@@ -51,7 +54,7 @@
           this.Message = '请输入衣物编号';
           this.ShowBar = true;
         }
-      }
+      },
     },
   }
 </script>

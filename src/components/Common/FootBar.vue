@@ -77,7 +77,7 @@
         }
       },
       finishAdd(){
-        this.$router.push({name:'Details'});
+        this.$router.push({name:'Details',params: { SelectData:this.SelectData}});
       },
       finishEdit(){
         if(this.$route.name == 'AddDetails'){

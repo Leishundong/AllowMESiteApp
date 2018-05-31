@@ -1,0 +1,16 @@
+{
+  "LinkerSrc":{
+    "AtAll":{
+      "Http":"http://rtest.rwlai.cn/rwlmall"
+    },
+    "Login":{
+      "http":"/rwlmall/login"
+    },
+    "Info":{
+      "http":"/rwlmall/role/getselfinfo"
+    },
+    "AllOrder":{
+      "http":"/rwlmall/statistical/allstoreorder"
+    }
+  }
+}
