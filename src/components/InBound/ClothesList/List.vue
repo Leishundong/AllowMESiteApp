@@ -5,7 +5,7 @@
       <p>总价<span v-text="Num"></span></p>
       <p>入站备注<span>aaa</span></p>
     </div>
-    <div class="list"  v-for="n in ItemData" @click="toAddDetails" v-if="WhereFrom == 'InBound'">
+    <div class="list"  v-for="n in ItemData" @click="toAddDetails(n)" v-if="WhereFrom == 'InBound'">
       <div class="img-box">
         <div class="top"><i class="iconfont icon-yifu img"></i></div>
       </div>
@@ -95,8 +95,9 @@
           return typ
         }
       },
-      toAddDetails(){
-        this.$router.push({name:'AddDetails'})
+      toAddDetails(item){
+        console.log(item);
+        this.$router.push({name:'AddDetails',params:{Item:item}})
       },
       toHangUpClothes(){
         this.$router.push({name:'HangUpClothes'})

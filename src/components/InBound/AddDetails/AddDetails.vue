@@ -4,7 +4,6 @@
     <search-bar></search-bar>
     <clothes-details></clothes-details>
     <details-image></details-image>
-    <foot-bar></foot-bar>
   </div>
 </template>
 <script>
@@ -24,19 +23,19 @@
     },
     data(){
       return{
-        OrderNumber:'',
-        WhereFrom:''
+        ClothesItem:'',
+        WhereFrom:'',
+        SelectData:['测试']
       }
     },
     created(){
     },
     beforeRouteEnter (to, from, next) {
       next(vm => {
-        if( vm.OrderNumber==''){
-          vm.OrderNumber = to.params.OrderName;
+        if( vm.ClothesItem==''){
+          vm.ClothesItem = to.params.Item;
           vm.WhereFrom = to.params.From;
-          console.log(1);
-          console.log(vm.OrderNumber);
+          console.log(vm.ClothesItem);
         }
       })
     },
