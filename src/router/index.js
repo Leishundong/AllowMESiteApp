@@ -7,7 +7,7 @@ Vue.use(Router);
 const _import = require('./_import_' + process.env.NODE_ENV);
 
 let constantRouterMap=[
-  {path:'/',redirect:'/Home'},
+  {path:'/',redirect:'/Login'},
   {path:'/Login',component:_import('Login/Login')},
   {path:'/Home',name:'Home',component:_import('Home/Index/Index'),children:[
     {path:'/Inbound',name:'Inbound',component:_import('InBound/InBound/InBound'),meta:{keepAlive:true}}

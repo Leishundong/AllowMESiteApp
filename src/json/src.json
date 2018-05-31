@@ -1,0 +1,10 @@
+{
+  "LinkerSrc":{
+    "AtAll":{
+      "Http":"http://rtest.rwlai.cn/rwlmall"
+    },
+    "Login":{
+      "http":"/rwlmall/login"
+    }
+  }
+}
