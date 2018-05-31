@@ -42,7 +42,7 @@
         required:true
       },
       Items:{
-        type:Object,
+        type:Array,
         required:true
       }
     },
