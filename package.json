@@ -12,7 +12,7 @@
     "build": "npm run project-build && npm run cordova-run"
   },
   "dependencies": {
-    "axios": "0.18.0",
+    "axios": "^0.18.0",
     "fastclick": "1.0.6",
     "hoek": "^5.0.3",
     "qs": "6.5.2",

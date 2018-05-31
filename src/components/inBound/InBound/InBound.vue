@@ -1,14 +1,20 @@
 <template>
   <div class="inBound-box">
-    <span class="span">待入站订单</span>
+    <head-bar></head-bar>
+    <search-bar></search-bar>
+    <div class="tops"><span class="span">待入站订单</span></div>
     <order-list v-bind:WhereFrom="WhereFrom" v-if="WhereFrom!=''"></order-list>
   </div>
 </template>
 <script>
   import OrderList from "../OrderList.vue";
+  import HeadBar from '../../Common/HeadBar.vue'
+  import SearchBar from "../../Common/SearchBar.vue"
   export default {
     components:{
-      OrderList
+      OrderList,
+      HeadBar,
+      SearchBar
     },
     data(){
       return{
@@ -38,8 +44,12 @@
   @import "~common/css/mixin";
   @import "~common/css/variable";
   .inBound-box{
-    margin-top: px2rem(66);
-    text-align: center;
+    background: $color-background-big;
+    height: 100%;
+    .tops{
+      margin-top: px2rem(75);
+      text-align: center;
+    }
     .span{
       @include font(11);
       color: #b8b8b8;

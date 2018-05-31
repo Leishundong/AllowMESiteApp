@@ -1,13 +1,13 @@
 <template>
   <div class="list-box">
-    <div class="list" v-for="Order in OrderLister">
-      <div class="list-bar"><div class="top">{{Order['订单编号']}}<span class="payment" v-if="Show">{{Order['付款状态']}}</span><span class="fen" v-if="Show">1/2</span></div></div>
-      <div class="list-body" @click="toDetails(Order['订单编号'])">
+    <div class="list" v-for="(Order,index) in OrderLister.data">
+      <div class="list-bar"><div class="top">{{Order.number}}<span class="payment" v-if="Show">{{Order['付款状态']}}</span><span class="fen" v-if="Show">1/2</span></div></div>
+      <div class="list-body" @click="toDetails(Order)">
         <div class="img-box">
          <div class="top">
-           <i class="iconfont icon-yifu general" v-if="Order['物品类型']=='衣物'"></i>
-           <i class="iconfont icon-bag_icon general" v-if="Order['物品类型']=='包包'"></i>
-           <i class="iconfont icon-shafa general" v-if="Order['物品类型']=='家居'"></i>
+           <i class="iconfont icon-yifu general" v-if="Order.createactorid.indexOf('A02') != -1"></i>
+           <i class="iconfont icon-bag_icon general" v-if="Order.createactorid.indexOf('A03') != -1"></i>
+           <i class="iconfont icon-shafa general" v-if="Order.createactorid.indexOf('A01') != -1"></i>
          </div>
         </div>
         <div class="message-box">
@@ -17,9 +17,9 @@
             <p>收衣地址：</p>
           </div>
           <div class="data">
-            <p>{{Order['预约时间']}}</p>
-            <p>{{Order['用户姓名']}}</p>
-            <p>{{Order['送衣地址']}}</p>
+            <p>{{Order.createtime|formatDate}}</p>
+            <p>{{Order.name}}</p>
+            <p>{{Order.address}}</p>
           </div>
         </div>
         <div class="fenge"></div>
@@ -33,6 +33,8 @@
 <script>
   import imgData from "../../json/img.json"
   import Data from "../../json/tsconfig.json"
+  import SrcData from "../../json/src.json"
+  import {formatDate} from '../../common/js/data';
   export default {
     data(){
       return{
@@ -43,8 +45,14 @@
     },
     created(){
       this.getImg();
-      this.getData();
       this.Where=this.WhereFrom;
+      this.getData();
+    },
+    filters: {
+      formatDate(time) {
+        var date = new Date(time);
+        return formatDate(date, 'yyyy-MM-dd hh:mm');
+      }
     },
     computed:{
       Show(){
@@ -66,7 +74,20 @@
         this.Dial=imgData.LinkerImg.Dial.src;
       },
       getData(){
-        this.OrderLister = Data.linkerName;
+        if(this.Where == "InBound"){
+          let src =SrcData.LinkerSrc.AtAll.Http+SrcData.LinkerSrc.AllOrder.http;
+          this.$ajax({
+            methods:"post",
+            url: src,
+            headers: {'x-auth-token': this.$token.token},
+            params:{
+              storeid:this.$token.accountId
+            }
+          }).then(res=>{
+            this.OrderLister = res.data;
+            console.log(this.OrderLister)
+          })
+        }
       },
       toDetails(el){
         let OrderName = el;

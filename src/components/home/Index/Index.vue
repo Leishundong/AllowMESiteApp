@@ -3,19 +3,21 @@
     <head-bar></head-bar>
     <serch-bar></serch-bar>
     <body-function></body-function>
-    <router-view></router-view>
   </div>
 </template>
 <script>
   import HeadBar from "../../Common/HeadBar.vue"
   import SerchBar from "../../Common/SearchBar.vue"
   import BodyFunction from "../BodyFunction.vue"
+  import SrcData from "../../../json/src.json"
   export default {
     name:'Home',
     components:{
       HeadBar,
       SerchBar,
       BodyFunction
+    },
+    created(){
     },
     data(){
       return{
