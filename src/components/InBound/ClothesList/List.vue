@@ -3,15 +3,14 @@
     <div class="message">
       <p>总数<span v-text="Total"></span></p>
       <p>总价<span v-text="Num"></span></p>
-      <p>物流备注<span>aaa</span></p>
       <p>入站备注<span>aaa</span></p>
     </div>
-    <div class="list"  v-for="n in SelectDatas" @click="toAddDetails" v-if="WhereFrom == 'InBound'">
+    <div class="list"  v-for="n in ItemData" @click="toAddDetails" v-if="WhereFrom == 'InBound'">
       <div class="img-box">
         <div class="top"><i class="iconfont icon-yifu img"></i></div>
       </div>
-      <span>{{n.name}}</span><span class="right">{{n.item}}</span>
-      <span class="tops">{{n.type}}</span>
+      <span>{{n.laundryProduct.name}}</span><span class="right">{{Number(n.laundryProduct.price)/100}}元</span>
+      <span class="tops" v-text="getType(n.laundryProduct.type)"></span>
     </div>
     <div class="list"  v-for="n in parseInt(3)" @click="toHangUpClothes" v-if="WhereFrom == 'HangUp'">
       <div class="img-box">
@@ -30,8 +29,7 @@
         Where:'',
         Num:'',
         Total:'',
-        SelectDatas:[],
-        Number:'',
+        ItemData:[]
       }
     },
     props:{
@@ -43,15 +41,15 @@
         type:Array,
         required:true
       },
-      OrderNumber:{
-        type:String,
+      Items:{
+        type:Object,
         required:true
       }
     },
     created(){
       this.Where = this.WhereFrom;
       this.SelectDatas = this.SelectData;
-      this.Number = this.OrderNumber;
+      this.ItemData = this.Items;
       this.getData()
     },
     /*computed:{*/
@@ -72,12 +70,30 @@
     },*/
     methods:{
       getData(){
-        this.Total = this.SelectDatas.length;
+        this.Total = this.ItemData.length;
         let num = 0;
-        this.SelectData.forEach((item,index)=>{
-            num += Number(item.item)
+        this.ItemData.forEach((item,index)=>{
+            num += Number(item.laundryProduct.price)/100;
+          console.log(item)
         })
         this.Num = num;
+      },
+      getType(type){
+        let typ = '';
+        let types = Number(type);
+        if(types==1){
+          typ='洗衣';
+          return typ
+        }else if(types==2){
+          typ='高端洗护';
+          return typ
+        }else if(types==3){
+          typ='小让家居';
+          return typ
+        }else if(types==4){
+          typ='小让商城';
+          return typ
+        }
       },
       toAddDetails(){
         this.$router.push({name:'AddDetails'})
@@ -118,7 +134,7 @@
         margin-left: px2rem(432);
       }
       .tops{
-        margin-top: px2rem(65);
+        padding-top: px2rem(48);
       }
       .img-box{
         float: left;

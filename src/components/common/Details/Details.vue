@@ -1,8 +1,8 @@
 <template>
   <div class="details-box">
     <head-bar></head-bar>
-    <fun-module v-bind:WhereFrom = "WhereFrom" v-bind:OrderNumber = "OrderNumber" v-bind:FinishSelect = "FinishSelect" v-if="WhereFrom!=''"></fun-module>
-    <detail-list v-bind:WhereFrom = "WhereFrom" v-bind:OrderNumber = "OrderNumber" v-if="WhereFrom!=''"></detail-list>
+    <fun-module v-bind:WhereFrom = "WhereFrom" v-bind:OrderData = "OrderData" v-bind:FinishSelect = "FinishSelect" v-if="WhereFrom!=''"></fun-module>
+    <detail-list v-bind:WhereFrom = "WhereFrom" v-bind:OrderData = "OrderData" v-if="WhereFrom!=''"></detail-list>
   </div>
 
 </template>
@@ -19,28 +19,28 @@
     data(){
       return{
         WhereFrom:'',
-        OrderNumber:'',
+        OrderData:'',
         FinishSelect:['测试']
       }
     },
     beforeRouteLeave(to,from,next){
       if(to.name == "Inbound"){
         this.WhereFrom='';
-        this.OrderNumber='';
+        this.OrderData='';
       }
       next();
     },
     beforeRouteEnter (to, from, next) {
       next(vm => {
-        if( vm.OrderNumber==''){
-          vm.OrderNumber = to.params.OrderName;
+        if( vm.OrderData==''){
+          vm.OrderData = to.params.OrderData;
           vm.WhereFrom = to.params.from;
         }if(from.name=='AddChildren'){
           vm.FinishSelect = [];
           vm.FinishSelect = to.params.SelectData;
           console.log( vm.FinishSelect);
           console.log( vm.WhereFrom);
-          console.log( vm.OrderNumber);
+          console.log( vm.OrderData);
         }
       })
     },

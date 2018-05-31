@@ -35,17 +35,17 @@
     data(){
       return{
         From:'',
-        orderNumber:'',
+        Items:'',
         SelectData:'',
       }
     },
     created(){
       this.From=this.WhereFrom;
-      this.orderNumber=this.OrderNumber;
+      this.Items=this.OrderData.items;
     },
     props:{
-      OrderNumber:{
-        type:String,
+      OrderData:{
+        type:Object,
         required:true
       },
       WhereFrom:{
@@ -62,7 +62,7 @@
         this.$router.push({ name: 'AddClothes', params: { OrderName:this.orderNumber,from:this.From }});
       },
       toAddDetails(){
-        this.$router.push({name:'ClothesList',params: { OrderName:this.orderNumber,from:this.From,SelectData:this.FinishSelect }})
+        this.$router.push({name:'ClothesList',params: { Items:this.Items,from:this.From,SelectData:this.FinishSelect }})
       },
       toList(){
         this.$router.push({name:'ClothesList',params: { OrderName:this.orderNumber,from:this.From }})

@@ -90,10 +90,11 @@
         }
       },
       toDetails(el){
-        let OrderName = el;
+        let Order = el;
+        console.log(Order);
         if(this.Where == 'HangUps'){
         }else {
-          this.$router.push({ name: 'Details', params: { OrderName:OrderName,from:this.Where }});
+          this.$router.push({ name: 'Details', params: { OrderData:Order,from:this.Where }});
         }
       }
     }

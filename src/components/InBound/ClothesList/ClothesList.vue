@@ -1,7 +1,7 @@
 <template>
   <div class="clothes-list-box">
     <head-bar></head-bar>
-    <list v-bind:WhereFrom="WhereFrom" v-bind:OrderNumber = "OrderNumber" v-bind:SelectData="SelectData" v-if="WhereFrom!=''"></list>
+    <list v-bind:WhereFrom="WhereFrom" v-bind:Items = "Items" v-bind:SelectData="SelectData" v-if="WhereFrom!=''"></list>
     <foot-bar v-bind:SelectData="SelectData" v-if="WhereFrom!='HangUp'"></foot-bar>
   </div>
 </template>
@@ -20,7 +20,7 @@
       return{
         WhereFrom:'',
         SelectData:['测试'],
-        OrderNumber:'',
+        Items:'',
       }
     },
     beforeRouteEnter (to, from, next) {
@@ -28,7 +28,8 @@
         if( vm.WhereFrom==''){
           vm.WhereFrom = to.params.from;
           vm.SelectData = to.params.SelectData;
-          vm.OrderNumber = to.params.OrderName;
+          vm.Items = to.params.Items;
+          console.log(vm.Items)
         }
       })
     },
