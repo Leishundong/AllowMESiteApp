@@ -104,15 +104,23 @@
         }
       },
       hangUp(){
-        let src = SrcData.LinkerSrc.AtAll.Http+SrcData.LinkerSrc.HangUp.http;
-        this.$ajax({
-          method:'post',
-          url: src,
-          params:{
-            orderid:this.OrderID,
-            orderitemid:ItemData.id
-          }
-        })
+       this.$alert("是否确定上挂") .then(_=>{
+         let src = SrcData.LinkerSrc.AtAll.Http+SrcData.LinkerSrc.HangUp.http;
+         this.$ajax({
+           method:'post',
+           url: src,
+           params:{
+             orderid:this.OrderID,
+             orderitemid:ItemData.id
+           }
+         })
+       }).then(_=>{
+         this.$msg("上挂成功")
+         this.$router.push({name:'HangUpList'})
+       })
+         .catch(_=>{
+           this.$msg("上挂失败")
+         })
       }
     }
   }

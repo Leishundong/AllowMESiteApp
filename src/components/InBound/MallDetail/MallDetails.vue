@@ -1,11 +1,7 @@
 <template>
   <div class="add-details-box">
     <head-bar></head-bar>
-    <div class="mall-remark">
-      <p>衣物备注：</p>
-      <input class="note" :placeholder="Message" v-model="Remarks"/>
-    </div>
-    <details-images v-on:SrcData="getSrcData"></details-images>
+    <details-images v-on:SrcData="getSrcData" v-on:Remarks="getRemarks"></details-images>
     <div style="clear: both" ></div>
     <button class="button" @click="finishOrder">完成编辑</button>
   </div>
@@ -58,7 +54,10 @@
         }).catch(res=>{
           console.log(res)
         })
-      }
+      },
+      getRemarks(data){
+        this.Remark = data;
+      },
     }
   }
 </script>

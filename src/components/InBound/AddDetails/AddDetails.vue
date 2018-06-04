@@ -1,11 +1,12 @@
 <template>
   <div class="add-details-box">
     <head-bar></head-bar>
-    <search-bar v-on:BarCode="getBarCode" v-if="IsShow"></search-bar>
-    <clothes-details v-on:Before="getBeforeData" v-on:After="getAfterData" v-on:Remarks="getRemarks" v-if="IsShow"></clothes-details>
-    <details-image v-on:SrcData="getSrcData"></details-image>
+    <search-bar v-on:BarCode="getBarCode" v-if="!IsShow"></search-bar>
+    <clothes-details v-on:Before="getBeforeData" v-on:After="getAfterData"  v-if="!IsShow"></clothes-details>
+    <details-image v-on:SrcData="getSrcData" v-on:Remarks="getRemarks"></details-image>
     <div style="clear: both" ></div>
-    <button class="button" @click="okToDetails">完成编辑</button>
+    <button class="button" @click="okToDetails"v-if="!IsShow">完成编辑</button>
+    <button class="button1" @click="okToDetails"v-if="IsShow">完成编辑</button>
   </div>
 </template>
 <script>
@@ -108,6 +109,15 @@
     background: $color-background-big;
     height: 100%;
     .button{
+      position: absolute;
+      bottom: px2rem(-530);
+      width: 100%;
+      height: px2rem(90);
+      background: $color-background-general;
+      @include font(5);
+    }
+    .button1{
+      position: absolute;
       bottom: px2rem(3);
       width: 100%;
       height: px2rem(90);

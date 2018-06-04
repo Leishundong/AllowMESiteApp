@@ -3,8 +3,8 @@
     <div class="bar-box">
       <p>瑕疵：</p>
       <div style="background: white;text-align: center">
-        <select class="select" v-model="Before">
-          <option class="option" v-for="option in options">
+        <select  v-model="Before">
+          <option  v-for="option in options">
             {{ option.type }}
           </option>
         </select>
@@ -32,10 +32,6 @@
       <div class="top"><span class="float" v-for="item in AfterData">{{item}}</span></div>
     </div>
     <div style="clear: both"></div>
-    <div class="bar-box">
-      <p>衣物备注：</p>
-      <input class="note" :placeholder="Message" v-model="Remarks" @blur="remark"/>
-    </div>
     <div style="clear: both"></div>
   </div>
 </template>
@@ -155,18 +151,18 @@
       width: px2rem(520);
       line-height: px2rem(73);
     }
-    .select{
+    select{
       @include font(5);
       float: left;
+      background: white;
       margin-top: px2rem(22);
       text-indent: px2rem(12);
       width: px2rem(520);
       height: px2rem(73);
-      border: solid px2rem(-13) #000;
-      color: black;
       appearance:none;
-      .option{
+      option{
         color: black;
+        border:0;
         text-align:center;
         @include font(-1);
         background: white;
