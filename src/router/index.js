@@ -19,6 +19,9 @@ let constantRouterMap=[
   {path:'/Receipt',name:'Receipt',component:_import('InBound/Receipt/Receipt')},
   {path:'/HangUpClothes',name:'HangUpClothes',component:_import('Common/HangUpClothes')},
   {path:'/HangUps',name:'HangUps',component:_import('HangUps/HangUps')},
+  {path:'/HangUp',name:'HangUp',component:_import('HangUps/HangUp'),meta:{keepAlive:true}},
+  {path:'/MallDetails',name:'MallDetails',component:_import('InBound/MallDetail/MallDetails')},
+  {path:'/HangUpList',name:'HangUpList',component:_import('HangUps/HangUpList'),meta:{keepAlive:true}}
 
 ];
 

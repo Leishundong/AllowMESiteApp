@@ -1,13 +1,13 @@
 <template>
   <div class="list-box">
     <div class="list" v-for="(Order,index) in OrderLister.data">
-      <div class="list-bar"><div class="top">{{Order.number}}<span class="payment" v-if="Show">{{Order['付款状态']}}</span><span class="fen" v-if="Show">1/2</span></div></div>
+      <div class="list-bar"><div class="top">{{Order.number}}<span class="payment" v-if="Show" v-text="Order.payStatus==1?'已付款':'未付款'"></span><span class="fen" v-if="Show" v-text="getStatus(Order)+'/'+Order.items.length"></span></div></div>
       <div class="list-body" @click="toDetails(Order)">
         <div class="img-box">
          <div class="top">
            <i class="iconfont icon-yifu general" v-if="Order.id.indexOf('A03') != -1"></i>
-           <i class="iconfont icon-bag_icon general" v-if="Order.createactorid.indexOf('A10') != -1"></i>
-           <i class="iconfont icon-shafa general" v-if="Order.createactorid.indexOf('A13') != -1"></i>
+           <i class="iconfont icon-bag_icon general" v-if="Order.id.indexOf('A10') != -1"></i>
+           <i class="iconfont icon-shafa general" v-if="Order.id.indexOf('A13') != -1"></i>
          </div>
         </div>
         <div class="message-box">
@@ -75,7 +75,7 @@
       },
       getData(){
         if(this.Where == "InBound"){
-          let src =SrcData.LinkerSrc.AtAll.Http+SrcData.LinkerSrc.AllOrder.http;
+          let src = SrcData.LinkerSrc.AtAll.Http+SrcData.LinkerSrc.AllOrder.http;
           this.$ajax({
             methods:"post",
             url: src,
@@ -84,9 +84,23 @@
               storeid:this.$token.accountId
             }
           }).then(res=>{
+            console.log(res);
             this.OrderLister = res.data;
-            console.log(this.OrderLister)
           })
+        }else if(this.Where == "HangUp"){
+          let src = SrcData.LinkerSrc.AtAll.Http+SrcData.LinkerSrc.AllHangUp.http;
+          this.$ajax({
+            methods:"post",
+            url: src,
+            headers: {'x-auth-token': this.$token.token},
+            params:{
+              storeid:this.$token.accountId
+            }
+          }).then(res=>{
+            console.log(res);
+            this.OrderLister = res.data;
+          })
+          console.log(1)
         }
       },
       toDetails(el){
@@ -94,8 +108,24 @@
         console.log(Order);
         if(this.Where == 'HangUps'){
         }else {
-          this.$router.push({ name: 'Details', params: { OrderData:Order,from:this.Where }});
+         if(Order.id.indexOf('A10') != -1){
+           this.$router.push({ name: 'MallDetails', params: { OrderData:Order}});
+         }else {
+           this.$router.push({ name: 'Details', params: { OrderData:Order,from:this.Where }});
+         }
         }
+      },
+      getStatus(data){
+        let HangUp = data.items;
+        let num = 0;
+        HangUp.forEach((item,index)=>{
+          if(Number(item.status)==2){
+          }else {
+            num += 1;
+            console.log(2)
+          }
+        })
+        return num
       }
     }
   }
@@ -113,7 +143,7 @@
         height:px2rem(63);
         background: $color-background-general;
         .payment{
-          margin-left: px2rem(171);
+          margin-left: px2rem(241);
           color: #FFF61B;
           @include font(2)
         }

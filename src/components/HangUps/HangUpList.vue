@@ -1,20 +1,18 @@
 <template>
   <div class="clothes-list-box">
     <head-bar></head-bar>
-    <list v-bind:WhereFrom="WhereFrom" v-bind:Items = "Items" v-bind:SelectData="SelectData" v-bind:OrderId="OrderId" v-if="WhereFrom!=''" ></list>
-    <div class="box"><button class="edit">添加备注</button><button class="write">打印</button><button class="inBound" @click="inBound">确认入站</button></div>
+    <list v-bind:WhereFrom="WhereFrom" v-bind:Items = "Items" v-bind:SelectData="SelectData"  v-bind:OrderId="OrderId" v-if="WhereFrom!=''" ></list>
+
   </div>
 </template>
 <script>
-  import HeadBar from "../../Common/HeadBar.vue"
-  import FootBar from "../../Common/FootBar.vue"
-  import List from "./List.vue"
-  import SrcData from  "../../../json/src.json"
+  import HeadBar from "../Common/HeadBar.vue"
+  import List from "../InBound/ClothesList/List.vue"
+  import SrcData from  "../../json/src.json"
   export default {
     name:'ClothesList',
     components:{
       HeadBar,
-      FootBar,
       List
     },
     data(){
@@ -36,6 +34,7 @@
           vm.OrderId = to.params.OrderId;
         }
         if(vm.laundryOrderItemList==''&&vm.OrderId.indexOf("A03")!=-1){
+          vm.laundryOrderItemList = [];
           vm.laundryOrderItemList.push(to.params.Obj);
         }else {
           vm.Img = [];
@@ -56,17 +55,17 @@
         if(this.OrderId.indexOf("A03")==-1){
           obj = this.Img;
           src = SrcData.LinkerSrc.AtAll.Http+SrcData.LinkerSrc.FurnitureOrder.http;
-           /* src = SrcData.LinkerSrc.AtAll.Http+SrcData.LinkerSrc.MallOrder.http;
-            this.$ajax({
-              method:'post',
-              url: src,
-              headers: {'x-auth-token': this.$token.token},
-              params:{ orderid:this.OrderId,waybillimage:obj},
-            }).then(res=>{
-              console.log(res)
-            }).catch(res=>{
-              console.log(res)
-            })*/
+          /* src = SrcData.LinkerSrc.AtAll.Http+SrcData.LinkerSrc.MallOrder.http;
+           this.$ajax({
+             method:'post',
+             url: src,
+             headers: {'x-auth-token': this.$token.token},
+             params:{ orderid:this.OrderId,waybillimage:obj},
+           }).then(res=>{
+             console.log(res)
+           }).catch(res=>{
+             console.log(res)
+           })*/
         }else {
           src = SrcData.LinkerSrc.AtAll.Http+SrcData.LinkerSrc.InBound.http;
           obj = this.laundryOrderItemList;

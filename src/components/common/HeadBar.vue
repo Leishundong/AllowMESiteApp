@@ -59,6 +59,8 @@
           this.Title = '衣物上挂';
         } else if(this.$route.name == 'HangUps'){
           this.Title = '整单上挂';
+        }else if(this.$route.name == 'MallDetails'){
+          this.Title = '商品详情';
         }
       },
     },

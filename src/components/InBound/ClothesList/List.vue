@@ -7,17 +7,35 @@
     </div>
     <div class="list"  v-for="n in ItemData" @click="toAddDetails(n)" v-if="WhereFrom == 'InBound'">
       <div class="img-box">
-        <div class="top"><i class="iconfont icon-yifu img"></i></div>
+        <div class="top">
+          <i class="iconfont icon-yifu img" v-if="orderID.indexOf('A03') != -1"></i>
+          <i class="iconfont icon-shafa img" v-if="orderID.indexOf('A13') != -1"></i>
+        </div>
       </div>
-      <span>{{n.laundryProduct.name}}</span><span class="right">{{Number(n.laundryProduct.price)/100}}元</span>
-      <span class="tops" v-text="getType(n.laundryProduct.type)"></span>
+      <div v-if="Show">
+        <span>{{n.laundryProduct.name}}</span><span class="right">{{Number(n.laundryProduct.price)/100}}元</span>
+        <span class="tops" v-text="getType(n.laundryProduct.category)"></span>
+      </div>
+      <div v-if="!Show">
+        <span>{{n.furnitureProduct.name}}</span><span class="right">{{Number(n.furnitureProduct.price)/100}}元</span>
+        <span class="tops" v-text="getType(n.furnitureProduct.category)"></span>
+      </div>
     </div>
-    <div class="list"  v-for="n in parseInt(3)" @click="toHangUpClothes" v-if="WhereFrom == 'HangUp'">
+    <div class="list"  v-for="n in ItemData" @click="toHangUpClothes(n)" v-if="WhereFrom == 'HangUp'">
       <div class="img-box">
-        <div class="top"><i class="iconfont icon-yifu img"></i></div>
+        <div class="top">
+          <i class="iconfont icon-yifu img" v-if="orderID.indexOf('A03') != -1"></i>
+          <i class="iconfont icon-shafa img" v-if="orderID.indexOf('A13') != -1"></i>
+        </div>
       </div>
-      <span>1</span><span class="right">未上挂</span>
-      <span class="tops">aaa</span>
+      <div v-if="Show">
+        <span>{{n.barCode}}</span><span class="right" v-text="n.status==2?'已上挂':'未上挂'"></span>
+        <span class="tops" v-text="getType(n.laundryProduct.category)"></span>
+      </div>
+      <div v-if="!Show">
+        <span>{{n.barCode}}</span><span class="right" v-text="n.status==2?'已上挂':'未上挂'"></span>
+        <span class="tops" v-text="getType(n.furnitureProduct.category)"></span>
+      </div>
     </div>
   </div>
 </template>
@@ -29,7 +47,9 @@
         Where:'',
         Num:'',
         Total:'',
-        ItemData:[]
+        ItemData:[],
+        Show:'',
+        orderID:''
       }
     },
     props:{
@@ -44,13 +64,24 @@
       Items:{
         type:Array,
         required:true
+      },
+      OrderId:{
+        type:String,
+        required:true
       }
     },
     created(){
       this.Where = this.WhereFrom;
       this.SelectDatas = this.SelectData;
       this.ItemData = this.Items;
-      this.getData()
+      this.orderID = this.OrderId;
+      console.log(this.ItemData);
+      if(this.orderID.indexOf("A03")==-1){
+        this.Show = false
+      }else {
+       this.Show = true
+      }
+      this.getData();
     },
     /*computed:{*/
      /* ShowList(){
@@ -72,35 +103,45 @@
       getData(){
         this.Total = this.ItemData.length;
         let num = 0;
-        this.ItemData.forEach((item,index)=>{
+        if(this.orderID.indexOf("A03")==-1){
+          this.ItemData.forEach((item,index)=>{
+
+          });
+        }else {
+          this.ItemData.forEach((item,index)=>{
             num += Number(item.laundryProduct.price)/100;
-          console.log(item)
-        })
+          });
+        }
         this.Num = num;
       },
       getType(type){
         let typ = '';
         let types = Number(type);
-        if(types==1){
-          typ='洗衣';
+        if(types==0){
+          typ='上衣类';
+          return typ
+        }else if(types==1){
+          typ='裤裙类';
           return typ
         }else if(types==2){
-          typ='高端洗护';
+          typ='皮草类';
           return typ
         }else if(types==3){
-          typ='小让家居';
+          typ='装饰类';
           return typ
         }else if(types==4){
-          typ='小让商城';
+          typ='鞋包类';
           return typ
         }
       },
       toAddDetails(item){
-        console.log(item);
-        this.$router.push({name:'AddDetails',params:{Item:item}})
+        let orderId = this.OrderId;
+        this.$router.push({name:'AddDetails',params:{Item:item,OrderId:orderId}})
       },
-      toHangUpClothes(){
-        this.$router.push({name:'HangUpClothes'})
+      toHangUpClothes(HangUpItem){
+        let orderId = this.OrderId;
+        console.log(HangUpItem)
+        this.$router.push({name:'HangUpClothes',params:{HItem:HangUpItem,OrderId:orderId}})
       }
     }
   }

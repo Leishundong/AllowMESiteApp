@@ -9,8 +9,29 @@
     "Info":{
       "http":"/rwlmall/role/getselfinfo"
     },
+    "UploadImg":{
+      "http":"/rwlmall/file/uploadimage"
+    },
+    "ImgAddress":{
+      "http":"http://p8wunmyz8.bkt.clouddn.com/"
+    },
+    "InBound":{
+      "http":"/rwlmall/laundryorder/singletoninbound"
+    },
+    "MallOrder":{
+      "http":"/rwlmall/mallorder/inbound"
+    },
+    "FurnitureOrder":{
+      "http":"/rwlmall/furnitureorder/inbound"
+    },
     "AllOrder":{
-      "http":"/rwlmall/statistical/allstoreorder"
+      "http":"/rwlmall/statistical/allinboundstoreorder"
+    },
+    "AllHangUp":{
+      "http":"/rwlmall/statistical/allhangonstoreorder"
+    },
+    "HangUp":{
+      "http":"/rwlmall/laundryorder/singletonhangon "
     }
   }
 }

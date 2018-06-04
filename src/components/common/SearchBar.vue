@@ -9,8 +9,8 @@
       <span class="button" @click="orderSelect"><div class="span"><span>搜索</span></div></span>
     </div>
     <div class="search-lan" v-else>
-      <input class="add-details"/>
-      <div class="img-box">
+      <input class="add-details" v-model="BarCode"/>
+      <div class="img-box" @click="getBarCode">
         <img class="img" :src="BarCodeImg"/>
       </div>
     </div>
@@ -25,6 +25,7 @@
         BarCodeImg:'',
         Message:'',
         ShowBar:'',
+        BarCode:''
       }
     },
     created(){
@@ -42,6 +43,11 @@
       },
       orderSelect(){
 
+      },
+      getBarCode(){
+        if(this.BarCode!=''){
+          this.$emit('BarCode',this.BarCode);
+        }
       },
       modify(){
         if(this.$route.name=='Home'||this.$route.name=='Inbound'){

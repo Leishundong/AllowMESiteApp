@@ -34,7 +34,7 @@
     <div style="clear: both"></div>
     <div class="bar-box">
       <p>衣物备注：</p>
-      <input class="note" :placeholder="Message"/>
+      <input class="note" :placeholder="Message" v-model="Remarks" @blur="remark"/>
     </div>
     <div style="clear: both"></div>
   </div>
@@ -49,6 +49,7 @@
         After:'请选择',
         BeforeData:[],
         AfterData:[],
+        Remarks:'',
         options: [
           { type:'脏了1'},
           { type:'脏了2'},
@@ -73,6 +74,15 @@
         if(type == true){
           this.BeforeData.push(this.Before);
           this.Before = '';
+          let Before = '';
+          this.BeforeData.forEach((item,index)=>{
+            if(index==this.BeforeData.length-1){
+              Before = Before+item
+            }else {
+              Before = Before+item+','
+            }
+          });
+          this.$emit('Before',Before);
         }else {
           this.$alert('重复输入')
         }
@@ -90,9 +100,21 @@
         if(type == true){
           this.AfterData.push(this.After);
           this.After = '';
+          let After = '';
+          this.AfterData.forEach((item,index)=>{
+            if(index==this.AfterData.length-1){
+              After = After+item
+            }else {
+              After = After+item+','
+            }
+          });
+          this.$emit('After',After);
         }else {
           this.$alert('重复输入')
         }
+      },
+      remark(){
+        this.$emit('Remarks',this.Remarks);
       }
     }
   }

@@ -1,9 +1,11 @@
 <template>
   <div class="add-details-box">
     <head-bar></head-bar>
-    <search-bar></search-bar>
-    <clothes-details></clothes-details>
-    <details-image></details-image>
+    <search-bar v-on:BarCode="getBarCode" v-if="IsShow"></search-bar>
+    <clothes-details v-on:Before="getBeforeData" v-on:After="getAfterData" v-on:Remarks="getRemarks" v-if="IsShow"></clothes-details>
+    <details-image v-on:SrcData="getSrcData"></details-image>
+    <div style="clear: both" ></div>
+    <button class="button" @click="okToDetails">完成编辑</button>
   </div>
 </template>
 <script>
@@ -25,7 +27,13 @@
       return{
         ClothesItem:'',
         WhereFrom:'',
-        SelectData:['测试']
+        BarCode:'',
+        Before:'',
+        After:'',
+        SrcData:'',
+        Remark:'',
+        OrderId:'',
+        IsShow:''
       }
     },
     created(){
@@ -35,12 +43,61 @@
         if( vm.ClothesItem==''){
           vm.ClothesItem = to.params.Item;
           vm.WhereFrom = to.params.From;
-          console.log(vm.ClothesItem);
+          vm.OrderId = to.params.OrderId;
+          if(vm.OrderId.indexOf("A03")==-1){
+            vm.IsShow = false;
+          }else {
+            vm.IsShow = true;
+          }
         }
       })
     },
     methods:{
-
+      getBarCode(data){
+        this.BarCode = data;
+      },
+      getBeforeData(data){
+        this.Before = data;
+      },
+      getAfterData(data){
+        this.After = data;
+      },
+      getSrcData(data){
+        this.SrcData = data;
+      },
+      getRemarks(data){
+        this.Remark = data;
+      },
+      okToDetails(){
+        let obj = {};
+        let img = '';
+        let problemImage = '';
+        this.SrcData.forEach((item,index)=>{
+          if(item.pro==false){
+            img = img+item.imgSrc+','
+          }else if(item.pro==true){
+            problemImage = problemImage+item.imgSrc+','
+          }
+        });
+        if(this.OrderId.indexOf("A03")==-1){
+            obj={
+              id:this.ClothesItem.id,
+              image:img.substring(0,img.length - 1),
+              problemImage: problemImage.substring(0,problemImage.length - 1)
+            };
+        }else {
+          obj={
+            id:this.ClothesItem.id,
+            barCode:this.BarCode,
+            flaw:this.Before,
+            washingEffect:this.After,
+            remark:this.Remark,
+            image:img.substring(0,img.length - 1),
+            problemImage: problemImage.substring(0,problemImage.length - 1)
+          };
+        }
+        this.$router.push({name:'ClothesList',params:{Obj:obj}})
+      }
     }
   }
 </script>
@@ -50,5 +107,12 @@
   .add-details-box{
     background: $color-background-big;
     height: 100%;
+    .button{
+      bottom: px2rem(3);
+      width: 100%;
+      height: px2rem(90);
+      background: $color-background-general;
+      @include font(5);
+    }
   }
 </style>

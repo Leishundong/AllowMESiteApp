@@ -62,10 +62,12 @@
         this.$router.push({ name: 'AddClothes', params: { OrderName:this.orderNumber,from:this.From }});
       },
       toAddDetails(){
-        this.$router.push({name:'ClothesList',params: { Items:this.Items,from:this.From,SelectData:this.FinishSelect }})
+        let orderId = this.OrderData.id;
+        this.$router.push({name:'ClothesList',params: { Items:this.Items,from:this.From,SelectData:this.FinishSelect,OrderId: orderId}})
       },
       toList(){
-        this.$router.push({name:'ClothesList',params: { OrderName:this.orderNumber,from:this.From }})
+        let orderId = this.OrderData.id;
+        this.$router.push({name:'HangUpList',params: { Items:this.Items,from:this.From,SelectData:this.FinishSelect,OrderId: orderId}})
       }
     }
   }

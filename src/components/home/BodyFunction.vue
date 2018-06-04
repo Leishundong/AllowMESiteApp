@@ -59,7 +59,7 @@
         this.Isshow = false;
       },
       toHangUp(){
-        this.$router.push({ name: 'Inbound', params: { from:'HangUp' }});
+        this.$router.push({ name: 'HangUp', params: { from:'HangUp' }});
       },
       toHangUps(){
         this.$router.push({ name: 'HangUps',params: { from:'HangUps' }});

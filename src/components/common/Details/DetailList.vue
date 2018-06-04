@@ -62,7 +62,6 @@
       getData(){
         this.Where=this.WhereFrom;
         this.OrderDatas = this.OrderData;
-        console.log(this.OrderDatas)
       },
       getType(type){
         let typ = '';

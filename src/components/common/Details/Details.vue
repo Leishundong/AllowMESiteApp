@@ -28,6 +28,10 @@
         this.WhereFrom='';
         this.OrderData='';
       }
+      if(to.name == "HangUp"){
+        this.WhereFrom='';
+        this.OrderData='';
+      }
       next();
     },
     beforeRouteEnter (to, from, next) {
@@ -38,9 +42,6 @@
         }if(from.name=='AddChildren'){
           vm.FinishSelect = [];
           vm.FinishSelect = to.params.SelectData;
-          console.log( vm.FinishSelect);
-          console.log( vm.WhereFrom);
-          console.log( vm.OrderData);
         }
       })
     },
