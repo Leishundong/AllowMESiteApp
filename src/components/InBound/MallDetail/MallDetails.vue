@@ -1,6 +1,6 @@
 <template>
   <div class="add-details-box">
-    <head-bar></head-bar>
+    <head-bar v-bind:WhereFrom="WhereFrom"></head-bar>
     <details-images v-on:SrcData="getSrcData" v-on:Remarks="getRemarks"></details-images>
     <div style="clear: both" ></div>
     <button class="button" @click="finishOrder">完成编辑</button>

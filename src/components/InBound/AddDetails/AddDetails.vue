@@ -1,6 +1,6 @@
 <template>
   <div class="add-details-box">
-    <head-bar></head-bar>
+    <head-bar v-bind:WhereFrom="WhereFrom"></head-bar>
     <search-bar v-on:BarCode="getBarCode" v-if="IsShow" v-bind:WhereFrom="WhereFrom"></search-bar>
     <clothes-details v-on:Before="getBeforeData" v-on:After="getAfterData"  v-if="IsShow"></clothes-details>
     <details-image v-on:SrcData="getSrcData" v-on:Remarks="getRemarks"></details-image>

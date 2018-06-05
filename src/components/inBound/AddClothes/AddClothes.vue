@@ -1,6 +1,6 @@
 <template>
   <div class="clothes-box">
-    <head-bar></head-bar>
+    <head-bar v-bind:WhereFrom="WhereFrom"></head-bar>
     <clothes-list v-on:Select-Data="getSelect"></clothes-list>
     <foot-bar v-bind:SelectData = "SelectData"></foot-bar>
   </div>
@@ -18,6 +18,7 @@
     data(){
       return{
         SelectData:['测试'],
+        WhereFrom:'测试'
       }
     },
     methods:{

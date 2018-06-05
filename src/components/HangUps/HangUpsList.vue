@@ -1,6 +1,6 @@
 <template>
   <div class="box">
-    <head-bar></head-bar>
+    <head-bar v-bind:WhereFrom="WhereFrom"></head-bar>
     <search-bar></search-bar>
     <div class="list" v-if="ItemData!=''">
       <div class="list-bar"><div class="top"><span v-text="ItemData.number"></span><span class="payment" v-text="ItemData.payStatus==1?'已付款':'未付款'"></span><span class="fen" v-text="getStatus(ItemData)+'/'+ItemData.items.length"></span></div></div>

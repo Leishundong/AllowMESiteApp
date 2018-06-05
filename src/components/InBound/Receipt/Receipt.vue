@@ -1,6 +1,6 @@
 <template>
   <div class="box">
-    <head-bar></head-bar>
+    <head-bar v-bind:WhereFrom="WhereFrom"></head-bar>
     <div class="message-box">
       <div class="message">
         <p>让我来信息科技有限公司</p>

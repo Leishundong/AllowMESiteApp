@@ -1,6 +1,6 @@
 <template>
   <div class="details-box">
-    <head-bar></head-bar>
+    <head-bar v-bind:WhereFrom = "WhereFrom"></head-bar>
     <fun-module v-bind:WhereFrom = "WhereFrom" v-bind:OrderData = "OrderData" v-bind:FinishSelect = "FinishSelect" v-if="WhereFrom!=''"></fun-module>
     <detail-list v-bind:WhereFrom = "WhereFrom" v-bind:OrderData = "OrderData" v-if="WhereFrom!=''"></detail-list>
   </div>

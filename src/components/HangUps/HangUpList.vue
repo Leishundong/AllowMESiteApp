@@ -1,8 +1,7 @@
 <template>
   <div class="clothes-list-box">
-    <head-bar></head-bar>
+    <head-bar v-bind:WhereFrom="WhereFrom"></head-bar>
     <list v-bind:WhereFrom="WhereFrom" v-bind:Items = "Items" v-bind:SelectData="SelectData"  v-bind:OrderId="OrderId" v-if="WhereFrom!=''" ></list>
-
   </div>
 </template>
 <script>

@@ -1,11 +1,11 @@
 <template>
   <div class="bar-box">
     <div class="left-button" v-if="IsShow">
-      <span v-text="LeftButton"></span>
+      <span v-text="LeftButton" @click="goLogin"></span>
       <span class="title" v-text="Title"></span>
     </div>
     <div class="left-button" v-if="!IsShow">
-      <span  v-text="LeftButton" @click="goBack()"></span>
+      <span  v-text="LeftButton" @click="goBack"></span>
       <span class="title" v-text="Title"></span>
     </div>
   </div>
@@ -22,14 +22,53 @@
     created(){
       this.titleName();
     },
+    props:{
+      WhereFrom:{
+        type:String,
+        required:true
+      }
+    },
     watch:{
       '$route'(){
         this.titleName();
       }
     },
     methods:{
+      goLogin(){
+        this.$router.push({name:'Login'})
+      },
       goBack(){
-        this.$router.go(-1)
+       if(this.$route.name == 'Inbound'){
+         this.$router.push({name:'Home'})
+        }else if(this.$route.name == 'Details'){
+         if(this.WhereFrom == 'HangUp'){
+           this.$router.push({name:'HangUp'})
+         }else {
+           this.$router.push({name:'Inbound'})
+         }
+        }else if(this.$route.name == 'AddClothes'){
+         this.$router.push({name:'Details'})
+        }else if(this.$route.name == 'AddChildren'){
+         this.$router.push({name:'AddClothes'})
+       }else if(this.$route.name == 'AddDetails'){
+         this.$router.push({name:'ClothesList'})
+        }else if(this.$route.name == 'ClothesList'){
+         this.$router.push({name:'Details'})
+        }else if(this.$route.name == 'Receipt'){
+         this.$router.push({name:'ClothesList'})
+        }else if(this.$route.name == 'HangUp'){
+         this.$router.push({name:'Home'})
+        }else if(this.$route.name == 'HangUpClothes'){
+         this.$router.push({name:'ClothesList'})
+        } else if(this.$route.name == 'HangUps'){
+         this.$router.push({name:'Home'})
+        }else if(this.$route.name == 'MallDetails'){
+         this.$router.push({name:'Inbound'})
+        }else if(this.$route.name == 'HangUpsList'){
+         this.$router.push({name:'HangUps'})
+       }else if(this.$route.name == 'HangUpsList'){
+         this.$router.push({name:'HangUps'})
+       }
       },
       titleName(){
         if(this.$route.name == 'Home'){

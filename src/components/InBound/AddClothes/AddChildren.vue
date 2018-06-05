@@ -1,6 +1,6 @@
 <template>
   <div class="add-box">
-    <head-bar></head-bar>
+    <head-bar v-bind:WhereFrom="WhereFrom"></head-bar>
     <div class="item-box">
       <div v-for="item in SelectData" class="box">
         <span v-text="item.name"></span><span  v-text="item.item"></span><button class="right">删除</button>
@@ -19,7 +19,8 @@
     },
     data(){
       return{
-        SelectData:''
+        SelectData:'',
+        WhereFrom:'测试'
       }
     },
     created(){

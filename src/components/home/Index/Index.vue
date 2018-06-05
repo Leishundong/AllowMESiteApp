@@ -1,6 +1,6 @@
 <template>
   <div class="home-box">
-    <head-bar></head-bar>
+    <head-bar v-bind:WhereFrom="WhereFrom"></head-bar>
     <serch-bar v-bind:WhereFrom="WhereFrom"></serch-bar>
     <body-function></body-function>
   </div>

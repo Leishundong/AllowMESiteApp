@@ -1,8 +1,8 @@
 <template>
   <div class="clothes-list-box">
-    <head-bar></head-bar>
+    <head-bar v-bind:WhereFrom="WhereFrom"></head-bar>
     <list v-bind:WhereFrom="WhereFrom" v-bind:Items = "Items" v-bind:SelectData="SelectData" v-bind:OrderId="OrderId" v-if="WhereFrom!=''" ></list>
-    <div class="box"><button class="edit">添加备注</button><button class="write">打印</button><button class="inBound" @click="clikInBound">确认入站</button></div>
+    <div class="box"><button class="edit">添加备注</button><button class="write" @click="toReceipt">打印</button><button class="inBound" @click="clikInBound">确认入站</button></div>
   </div>
 </template>
 <script>
@@ -79,7 +79,7 @@
           params:{ orderid:this.OrderId},
           data: obj
         }).then(res=>{
-          this.$alert("入站成功");
+          this.$msg.setShow('入站成功')
           this.$router.push({name:'Inbound'});
           console.log(res)
         }).catch(res=>{
@@ -87,10 +87,16 @@
           console.log(res)
         })
       },
+      toReceipt(){
+        this.$router.push({name: 'Receipt'});
+      },
       clikInBound(){
-        this.$alert("是否确定入站").then(_=>{
+        this.$alert("是否确定入站",['confirm','cancel']).then(()=>{
+          console.log('confirm')
           this.inBound()
-        })
+        }).catch(()=>{
+          console.log('cancel')
+        });
       }
     }
   }
