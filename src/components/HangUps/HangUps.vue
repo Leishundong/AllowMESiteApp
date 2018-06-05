@@ -1,42 +1,64 @@
 <template>
   <div class="box">
     <head-bar></head-bar>
-    <search-bar></search-bar>
-    <order-list v-bind:WhereFrom="WhereFrom" v-if="WhereFrom!=''"></order-list>
-    <bodys></bodys>
-    <button class="button" @click="okToHangUp">确定上挂</button>
+    <search-bar v-on:SearchData="getSearchData" v-bind:WhereFrom="WhereFrom"></search-bar>
+    <searc-list v-bind:WhereFrom="WhereFrom" v-bind:OrderLister="OrderLister" v-if="OrderLister!=''"></searc-list>
   </div>
 </template>
 <script>
   import HeadBar from "../Common/HeadBar.vue"
   import SearchBar from "../Common/SearchBar.vue"
   import OrderList from "../InBound/OrderList.vue"
-  import Bodys from "./HangUpsBody.vue"
+  import SearcList from "../Common/SearchList.vue"
+  import SrcData from "../../json/src.json"
   export default {
     name:"HangUps",
     components:{
       HeadBar,
       SearchBar,
       OrderList,
-      Bodys
+      SearcList
     },
     data(){
       return{
-        WhereFrom:''
+        WhereFrom:'',
+        SearchData:'',
+        OrderLister:''
       }
     },
+
     beforeRouteEnter (to, from, next) {
       next(vm => {
         if( vm.WhereFrom==''){
           vm.WhereFrom = to.params.from;
-          console.log(vm.WhereFrom)
+          let src = SrcData.LinkerSrc.AtAll.Http+SrcData.LinkerSrc.AllHangUp.http;
+          vm.$ajax({
+            methods:"post",
+            url: src,
+            headers: {'x-auth-token': vm.$token.token},
+            params:{
+              storeid:vm.$token.accountId
+            }
+          }).then(res=>{
+            vm.OrderLister = res.data.data;
+            console.log(vm.OrderLister.data)
+          })
         }
       })
     },
-    methods:{
-      okToHangUp(){
-        
+    beforeRouteLeave(to,from,next){
+      if(to.name == "Home"){
+        this.WhereFrom='';
       }
+      next();
+    },
+    methods:{
+      getSearchData(data){
+        this.OrderLister = [];
+        let datas = data.data;
+        this.OrderLister.push(datas)
+        console.log(datas)
+      },
     },
   }
 </script>
@@ -47,6 +69,7 @@
     background: $color-background-big;
     height: 100%;
     .button{
+      position: absolute;
       bottom: px2rem(3);
       width: 100%;
       height: px2rem(90);

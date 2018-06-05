@@ -1,12 +1,12 @@
 <template>
   <div class="add-details-box">
     <head-bar></head-bar>
-    <search-bar v-on:BarCode="getBarCode" v-if="!IsShow"></search-bar>
-    <clothes-details v-on:Before="getBeforeData" v-on:After="getAfterData"  v-if="!IsShow"></clothes-details>
+    <search-bar v-on:BarCode="getBarCode" v-if="IsShow" v-bind:WhereFrom="WhereFrom"></search-bar>
+    <clothes-details v-on:Before="getBeforeData" v-on:After="getAfterData"  v-if="IsShow"></clothes-details>
     <details-image v-on:SrcData="getSrcData" v-on:Remarks="getRemarks"></details-image>
     <div style="clear: both" ></div>
-    <button class="button" @click="okToDetails"v-if="!IsShow">完成编辑</button>
-    <button class="button1" @click="okToDetails"v-if="IsShow">完成编辑</button>
+    <button class="button" @click="okToDetails"v-if="IsShow">完成编辑</button>
+    <button class="button1" @click="okToDetails"v-if="!IsShow">完成编辑</button>
   </div>
 </template>
 <script>
@@ -27,7 +27,7 @@
     data(){
       return{
         ClothesItem:'',
-        WhereFrom:'',
+        WhereFrom:'测试',
         BarCode:'',
         Before:'',
         After:'',
@@ -43,8 +43,8 @@
       next(vm => {
         if( vm.ClothesItem==''){
           vm.ClothesItem = to.params.Item;
-          vm.WhereFrom = to.params.From;
           vm.OrderId = to.params.OrderId;
+          console.log(vm.WhereFrom);
           if(vm.OrderId.indexOf("A03")==-1){
             vm.IsShow = false;
           }else {

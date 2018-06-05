@@ -1,7 +1,7 @@
 <template>
   <div class="home-box">
     <head-bar></head-bar>
-    <serch-bar></serch-bar>
+    <serch-bar v-bind:WhereFrom="WhereFrom"></serch-bar>
     <body-function></body-function>
   </div>
 </template>
@@ -21,7 +21,7 @@
     },
     data(){
       return{
-
+        WhereFrom:'测试'
       }
   },
   methods:{

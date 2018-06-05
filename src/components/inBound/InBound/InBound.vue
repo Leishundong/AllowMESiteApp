@@ -1,24 +1,28 @@
 <template>
   <div class="inBound-box">
     <head-bar></head-bar>
-    <search-bar></search-bar>
+    <search-bar v-on:SearchData="getSearchData" v-bind:WhereFrom="WhereFrom"></search-bar>
     <div class="tops"><span class="span">待入站订单</span></div>
-    <order-list v-bind:WhereFrom="WhereFrom" v-if="WhereFrom!=''"></order-list>
+    <searc-list v-bind:WhereFrom="WhereFrom" v-bind:OrderLister="OrderLister" v-if="OrderLister!=''"></searc-list>
   </div>
 </template>
 <script>
   import OrderList from "../OrderList.vue";
   import HeadBar from '../../Common/HeadBar.vue'
   import SearchBar from "../../Common/SearchBar.vue"
+  import SrcData from "../../../json/src.json"
+  import SearcList from "../../Common/SearchList.vue"
   export default {
     components:{
-      OrderList,
       HeadBar,
-      SearchBar
+      SearchBar,
+      SearcList
     },
     data(){
       return{
         WhereFrom:'',
+        SearchData:'',
+        OrderLister:''
       }
     },
     beforeRouteLeave(to,from,next){
@@ -31,12 +35,32 @@
       next(vm => {
         if( vm.WhereFrom==''){
           vm.WhereFrom = to.params.from;
-          console.log(vm.WhereFrom)
+          let src = SrcData.LinkerSrc.AtAll.Http+SrcData.LinkerSrc.AllOrder.http;
+          vm.$ajax({
+            methods:"post",
+            url: src,
+            headers: {'x-auth-token': vm.$token.token},
+            params:{
+              storeid:vm.$token.accountId
+            }
+          }).then(res=>{
+            console.log(res);
+            vm.OrderLister = res.data.data;
+          })
         }
       })
     },
     methods:{
-
+      getSearchData(data){
+        if(this.WhereFrom=='InBound'){
+          this.OrderLister = data.data
+        }else {
+          this.OrderLister = [];
+          let datas = data.data;
+          this.OrderLister.push(datas);
+          console.log(datas)
+        }
+      }
     }
   }
 </script>

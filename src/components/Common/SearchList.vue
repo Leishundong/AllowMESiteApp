@@ -1,14 +1,14 @@
 <template>
-  <div class="list-box">
-    <div class="list" v-for="(Order,index) in OrderLister.data" >
-      <div class="list-bar"><div class="top">{{Order.number}}<span class="payment" v-if="Show" v-text="Order.payStatus==1?'已付款':'未付款'"></span><span class="fen" v-if="Show" v-text="getStatus(Order)+'/'+Order.items.length"></span></div></div>
+  <div class="list-box" v-if="OrderLister!=''">
+    <div class="list" v-for="(Order,index) in OrderLister" >
+      <div class="list-bar"><div class="top">{{Order.number}}<span class="payment" v-if="Show" v-text="Order.payStatus==1?'已付款':'未付款'"></span><span class="fen" v-if="Show" v-text="1+'/'+Order.items.length"></span></div></div>
       <div class="list-body" @click="toDetails(Order)">
         <div class="img-box">
-         <div class="top">
-           <i class="iconfont icon-yifu general" v-if="Order.id.indexOf('A03') != -1"></i>
-           <i class="iconfont icon-bag_icon general" v-if="Order.id.indexOf('A10') != -1"></i>
-           <i class="iconfont icon-shafa general" v-if="Order.id.indexOf('A13') != -1"></i>
-         </div>
+          <div class="top">
+            <i class="iconfont icon-yifu general" v-if="Order.id.indexOf('A03') != -1"></i>
+            <i class="iconfont icon-bag_icon general" v-if="Order.id.indexOf('A10') != -1"></i>
+            <i class="iconfont icon-shafa general" v-if="Order.id.indexOf('A13') != -1"></i>
+          </div>
         </div>
         <div class="message-box">
           <div class="title">
@@ -39,14 +39,13 @@
     data(){
       return{
         Dial:'',
-        OrderLister:[],
-        Where:''
+        Where:'',
+        OrderListers:''
       }
     },
     created(){
       this.getImg();
       this.Where=this.WhereFrom;
-      this.getData();
     },
     filters: {
       formatDate(time) {
@@ -56,16 +55,20 @@
     },
     computed:{
       Show(){
-       if(this.Where=='InBound'){
-         return false
-       }else {
-         return true
-       }
+        if(this.Where=='InBound'){
+          return false
+        }else {
+          return true
+        }
       }
     },
     props:{
       WhereFrom:{
         type:String,
+        required:true
+      },
+      OrderLister:{
+        type:Array,
         required:true
       }
     },
@@ -73,56 +76,26 @@
       getImg(){
         this.Dial=imgData.LinkerImg.Dial.src;
       },
-      getData(){
-        if(this.Where == "InBound"){
-          let src = SrcData.LinkerSrc.AtAll.Http+SrcData.LinkerSrc.AllOrder.http;
-          this.$ajax({
-            methods:"post",
-            url: src,
-            headers: {'x-auth-token': this.$token.token},
-            params:{
-              storeid:this.$token.accountId
-            }
-          }).then(res=>{
-            console.log(res);
-            this.OrderLister = res.data;
-          })
-        }else if(this.Where == "HangUp"||this.Where == "HangUps"){
-          let src = SrcData.LinkerSrc.AtAll.Http+SrcData.LinkerSrc.AllHangUp.http;
-          this.$ajax({
-            methods:"post",
-            url: src,
-            headers: {'x-auth-token': this.$token.token},
-            params:{
-              storeid:this.$token.accountId
-            }
-          }).then(res=>{
-            console.log(res);
-            this.OrderLister = res.data;
-          })
-        }
-      },
       toDetails(el){
         let Order = el;
-        console.log(Order);
         if(this.Where == 'HangUps'){
           this.$router.push({ name: 'HangUpsList', params: { OrderData:Order,from:this.Where}});
         }else {
-         if(Order.id.indexOf('A10') != -1){
-           this.$router.push({ name: 'MallDetails', params: { OrderData:Order,from:this.Where}});
-         }else {
-           this.$router.push({ name: 'Details', params: { OrderData:Order,from:this.Where }});
-         }
+          if(Order.id.indexOf('A10') != -1){
+            this.$router.push({ name: 'MallDetails', params: { OrderData:Order,from:this.Where}});
+          }else {
+            this.$router.push({ name: 'Details', params: { OrderData:Order,from:this.Where }});
+          }
         }
       },
       getStatus(data){
+        console.log(data)
         let HangUp = data.items;
         let num = 0;
         HangUp.forEach((item,index)=>{
           if(Number(item.status)==2){
           }else {
             num += 1;
-            console.log(2)
           }
         })
         return num

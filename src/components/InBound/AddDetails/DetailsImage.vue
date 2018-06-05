@@ -3,7 +3,7 @@
   <div class="img-box">
     <div class="mall-remark">
       <p>{{Msg}}</p>
-      <input class="note" :placeholder="Message" v-model="Remarks" @blur="remark"/>
+      <input class="note" :placeholder="Message" v-model="Remarks" @blur="remark" v-if="isShow"/>
     </div>
     <div v-for="(n,index) in parseInt(6)" class="box" @click="clikImg(index)">
       <div class="img"  >
@@ -29,12 +29,26 @@
         SrcData:[],
         Remarks:'',
         Message:'备注信息',
-        Msg:'衣物备注'
+        Msg:'衣物备注',
+        isShow:true
+      }
+    },
+    watch:{
+      '$route'(){
+        if(this.$route.name=="MallDetails"){
+          this.Msg='上传运单图片:';
+          this.isShow = false
+        }else {
+          this.isShow = true
+        }
       }
     },
     created(){
       if(this.$route.name=="MallDetails"){
-        this.Msg='商品备注'
+        this.Msg='上传运单图片:';
+        this.isShow = false
+      }else {
+        this.isShow = true
       }
     },
     methods:{
@@ -47,7 +61,6 @@
         document.getElementById([id]).click()
       },
       PreviewImage(event){
-        console.log(2);
         var file = event.target.files[0];
         var formData = new FormData();
         formData.append('file', file);

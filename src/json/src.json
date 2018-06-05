@@ -31,7 +31,19 @@
       "http":"/rwlmall/statistical/allhangonstoreorder"
     },
     "HangUp":{
-      "http":"/rwlmall/laundryorder/singletonhangon "
+      "http":"/rwlmall/laundryorder/singletonhangon"
+    },
+    "ModifyRemark":{
+      "http":"/rwlmall/laundryorder/inboundremark"
+    },
+    "HangUps":{
+      "http":"/rwlmall/laundryorder/hangon"
+    },
+    "SearchBars":{
+      "http":"/rwlmall/laundryorder/findbyitembarcode"
+    },
+    "SearchOrders":{
+      "http":"/rwlmall/statistical/storefindneworder"
     }
   }
 }

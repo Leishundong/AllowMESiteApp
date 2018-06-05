@@ -1,8 +1,8 @@
 <template>
   <div class="box">
     <head-bar></head-bar>
-    <search-bar></search-bar>
-    <order-list v-bind:WhereFrom="WhereFrom" v-if="WhereFrom!=''"></order-list>
+    <search-bar v-on:SearchData="getSearchData" v-bind:WhereFrom="WhereFrom"></search-bar>
+    <searc-list v-bind:WhereFrom="WhereFrom" v-bind:OrderLister="OrderLister" v-if="OrderLister!=''"></searc-list>
   </div>
 </template>
 <script>
@@ -10,17 +10,21 @@
   import SearchBar from "../Common/SearchBar.vue"
   import OrderList from "../InBound/OrderList.vue"
   import Bodys from "./HangUpsBody.vue"
+  import SrcData from "../../json/src.json"
+  import SearcList from "../Common/SearchList.vue"
   export default {
     name:"HangUps",
     components:{
       HeadBar,
       SearchBar,
       OrderList,
-      Bodys
+      SearcList
     },
     data(){
       return{
-        WhereFrom:''
+        WhereFrom:'',
+        SearchData:'',
+        OrderLister:''
       }
     },
     beforeRouteLeave(to,from,next){
@@ -33,11 +37,27 @@
       next(vm => {
         if( vm.WhereFrom==''){
           vm.WhereFrom = to.params.from;
-          console.log(vm.WhereFrom)
+          let src = SrcData.LinkerSrc.AtAll.Http+SrcData.LinkerSrc.AllHangUp.http;
+          vm.$ajax({
+            methods:"post",
+            url: src,
+            headers: {'x-auth-token': vm.$token.token},
+            params:{
+              storeid:vm.$token.accountId
+            }
+          }).then(res=>{
+            vm.OrderLister = res.data.data;
+            console.log(vm.OrderLister.data)
+          })
         }
       })
     },
     methods:{
+      getSearchData(data){
+        this.OrderLister = [];
+        let datas = data.data;
+        this.OrderLister.push(datas);
+      },
       okToHangUp(){
 
       }

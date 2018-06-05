@@ -5,7 +5,7 @@
       <div class="img-box">
         <img class="img" :src="BarCodeImg"/>
       </div>
-      <input/>
+      <input v-model="Search"/>
       <span class="button" @click="orderSelect"><div class="span"><span>搜索</span></div></span>
     </div>
     <div class="search-lan" v-else>
@@ -18,6 +18,7 @@
 </template>
 <script>
   import imgData from "../../json/img.json"
+  import SrcData from "../../json/src.json"
   export default {
     name:'SearchBar',
     data(){
@@ -25,7 +26,14 @@
         BarCodeImg:'',
         Message:'',
         ShowBar:'',
-        BarCode:''
+        BarCode:'',
+        Search:''
+      }
+    },
+    props:{
+      WhereFrom:{
+        type:String,
+        required:true
       }
     },
     created(){
@@ -42,7 +50,54 @@
         this.BarCodeImg = imgData.LinkerImg.BarCode.src;
       },
       orderSelect(){
+        console.log(this.WhereFrom);
+        if(this.WhereFrom == "InBound"){
+          let type = '';
+          if(this.Search.length==11){
+            type = 1
+          }else if(this.Search.length==12){
+            type = 0
+          }
+          let src = SrcData.LinkerSrc.AtAll.Http+SrcData.LinkerSrc.SearchOrders.http;
+          console.log(src)
+          this.$ajax({
+            method:'post',
+            url: src,
+            headers: {'x-auth-token': this.$token.token},
+            params:{
+              key:this.Search,
+              type:type
+            }
+          }).then(res=>{
+            let SearchData = res.data;
+            this.Search = '';
+            console.log(SearchData);
+            this.$emit('SearchData',SearchData);
+          })
+            .catch(res=>{
+              console.log(res)
+              this.Search = '';
+            })
 
+        }else if(this.WhereFrom == "HangUp"||this.WhereFrom == "HangUps"){
+          let src = SrcData.LinkerSrc.AtAll.Http+SrcData.LinkerSrc.SearchBars.http;
+          console.log(src)
+          this.$ajax({
+            method:'post',
+            url: src,
+            headers: {'x-auth-token': this.$token.token},
+            params:{
+              barcode:this.Search
+            }
+          }).then(res=>{
+            let SearchData = res.data;
+            console.log(SearchData);
+            this.$emit('SearchData',SearchData);
+          })
+            .catch(res=>{
+              console.log(res)
+            })
+        }
       },
       getBarCode(){
         if(this.BarCode!=''){
@@ -56,7 +111,7 @@
         }else if(this.$route.name == 'AddDetails'){
           this.Message = '请输入衣物条码';
           this.ShowBar = false;
-        }else if(this.$route.name == 'HangUp'||this.$route.name == 'HangUps'){
+        }else if(this.$route.name == 'HangUp'||this.$route.name == 'HangUps'||this.$route.name == 'HangUpsList'){
           this.Message = '请输入衣物编号';
           this.ShowBar = true;
         }

@@ -1,14 +1,16 @@
 <template>
-  <div class="list-box">
-    <div class="list" v-for="(Order,index) in OrderLister.data" >
-      <div class="list-bar"><div class="top">{{Order.number}}<span class="payment" v-if="Show" v-text="Order.payStatus==1?'已付款':'未付款'"></span><span class="fen" v-if="Show" v-text="getStatus(Order)+'/'+Order.items.length"></span></div></div>
-      <div class="list-body" @click="toDetails(Order)">
+  <div class="box">
+    <head-bar></head-bar>
+    <search-bar></search-bar>
+    <div class="list" v-if="ItemData!=''">
+      <div class="list-bar"><div class="top"><span v-text="ItemData.number"></span><span class="payment" v-text="ItemData.payStatus==1?'已付款':'未付款'"></span><span class="fen" v-text="getStatus(ItemData)+'/'+ItemData.items.length"></span></div></div>
+      <div class="list-body" @click="">
         <div class="img-box">
-         <div class="top">
-           <i class="iconfont icon-yifu general" v-if="Order.id.indexOf('A03') != -1"></i>
-           <i class="iconfont icon-bag_icon general" v-if="Order.id.indexOf('A10') != -1"></i>
-           <i class="iconfont icon-shafa general" v-if="Order.id.indexOf('A13') != -1"></i>
-         </div>
+          <div class="top" >
+            <i class="iconfont icon-yifu general" v-if="ItemData.id.indexOf('A03') != -1"></i>
+            <i class="iconfont icon-bag_icon general" v-if="ItemData.id.indexOf('A10') != -1"></i>
+            <i class="iconfont icon-shafa general" v-if="ItemData.id.indexOf('A13') != -1"></i>
+          </div>
         </div>
         <div class="message-box">
           <div class="title">
@@ -17,9 +19,9 @@
             <p>收衣地址：</p>
           </div>
           <div class="data">
-            <p>{{Order.createtime|formatDate}}</p>
-            <p>{{Order.name}}</p>
-            <p>{{Order.address}}</p>
+            <p>{{ItemData.createtime|formatDate}}</p>
+            <p>{{ItemData.name}}</p>
+            <p>{{ItemData.address}}</p>
           </div>
         </div>
         <div class="fenge"></div>
@@ -28,25 +30,34 @@
         </div>
       </div>
     </div>
+    <div style="clear:both"></div>
+    <bodys v-bind:ItemData="ItemData" v-if="ItemData!=''"></bodys>
+    <div style="clear:both"></div>
+    <button class="button" @click="toHangUp">确定上挂</button>
   </div>
 </template>
 <script>
-  import imgData from "../../json/img.json"
-  import Data from "../../json/tsconfig.json"
+  import HeadBar from "../Common/HeadBar.vue"
+  import SearchBar from "../Common/SearchBar.vue"
+  import OrderList from "../InBound/OrderList.vue"
+  import Bodys from "./HangUpsBody.vue"
+  import {formatDate} from '../../common/js/data'
+  import ImgData from '../../json/img.json'
   import SrcData from "../../json/src.json"
-  import {formatDate} from '../../common/js/data';
   export default {
+    name:"HangUps",
+    components:{
+      HeadBar,
+      SearchBar,
+      OrderList,
+      Bodys
+    },
     data(){
       return{
-        Dial:'',
-        OrderLister:[],
-        Where:''
+        WhereFrom:'',
+        ItemData:'',
+        Dial:''
       }
-    },
-    created(){
-      this.getImg();
-      this.Where=this.WhereFrom;
-      this.getData();
     },
     filters: {
       formatDate(time) {
@@ -54,67 +65,17 @@
         return formatDate(date, 'yyyy-MM-dd hh:mm');
       }
     },
-    computed:{
-      Show(){
-       if(this.Where=='InBound'){
-         return false
-       }else {
-         return true
-       }
-      }
-    },
-    props:{
-      WhereFrom:{
-        type:String,
-        required:true
-      }
-    },
-    methods:{
-      getImg(){
-        this.Dial=imgData.LinkerImg.Dial.src;
-      },
-      getData(){
-        if(this.Where == "InBound"){
-          let src = SrcData.LinkerSrc.AtAll.Http+SrcData.LinkerSrc.AllOrder.http;
-          this.$ajax({
-            methods:"post",
-            url: src,
-            headers: {'x-auth-token': this.$token.token},
-            params:{
-              storeid:this.$token.accountId
-            }
-          }).then(res=>{
-            console.log(res);
-            this.OrderLister = res.data;
-          })
-        }else if(this.Where == "HangUp"||this.Where == "HangUps"){
-          let src = SrcData.LinkerSrc.AtAll.Http+SrcData.LinkerSrc.AllHangUp.http;
-          this.$ajax({
-            methods:"post",
-            url: src,
-            headers: {'x-auth-token': this.$token.token},
-            params:{
-              storeid:this.$token.accountId
-            }
-          }).then(res=>{
-            console.log(res);
-            this.OrderLister = res.data;
-          })
+    beforeRouteEnter (to, from, next) {
+      next(vm => {
+        if( vm.WhereFrom==''){
+          vm.WhereFrom = to.params.from;
+          vm.ItemData = to.params.OrderData;
+          vm.Dial=ImgData.LinkerImg.Dial.src;
+          console.log(vm.ItemData)
         }
-      },
-      toDetails(el){
-        let Order = el;
-        console.log(Order);
-        if(this.Where == 'HangUps'){
-          this.$router.push({ name: 'HangUpsList', params: { OrderData:Order,from:this.Where}});
-        }else {
-         if(Order.id.indexOf('A10') != -1){
-           this.$router.push({ name: 'MallDetails', params: { OrderData:Order,from:this.Where}});
-         }else {
-           this.$router.push({ name: 'Details', params: { OrderData:Order,from:this.Where }});
-         }
-        }
-      },
+      })
+    },
+    methods: {
       getStatus(data){
         let HangUp = data.items;
         let num = 0;
@@ -126,6 +87,23 @@
           }
         })
         return num
+      },
+      toHangUp(){
+        let src = SrcData.LinkerSrc.AtAll.Http+SrcData.LinkerSrc.HangUps.http;
+        this.$ajax({
+          method:'post',
+          url: src,
+          headers: {'x-auth-token': this.$token.token},
+          params:{
+            orderid:this.ItemData.id,
+          }
+        }).then(res=>{
+          console.log(res)
+          this.$router.push({name:'HangUps'})
+        })
+          .catch(res=>{
+            console.log(res)
+          })
       }
     }
   }
@@ -133,11 +111,12 @@
 <style lang="scss" rel="stylesheet/scss" scoped>
   @import "~common/css/mixin";
   @import "~common/css/variable";
-  .list-box{
-    margin-top: px2rem(43);
-    text-align: center;
+  .box{
+    background: $color-background-big;
     .list{
       width: 100%;
+      margin-top: px2rem(80);
+      text-align: center;
       .list-bar{
         width: 100%;
         height:px2rem(63);
@@ -227,6 +206,13 @@
         }
       }
     }
+    .button{
+      position: absolute;
+      bottom: px2rem(3);
+      width: 100%;
+      height: px2rem(90);
+      background: $color-background-general;
+      @include font(5);
+    }
   }
-
 </style>
