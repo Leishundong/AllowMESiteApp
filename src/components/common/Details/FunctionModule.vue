@@ -1,67 +1,73 @@
 <template>
   <div class="fuction-box">
-    <div class="Site-box" v-if="From=='InBound'">
-      <div class="one-box" @click="toAddClothes">
+    <div class="Site-box">
+      <!--<div class="one-box" @click="toAddClothes">
         <div class="box">
           <div class="top"><i class="iconfont icon-xinjiantianjiabiaodanyemian img"></i></div>
         </div>
         <p>添加衣物</p>
-      </div>
-      <div class="two-box" @click="toAddDetails">
+      </div>-->
+      <div class="add-details-box" @click="toClothes">
         <div class="box">
           <div class="top"><i class="iconfont icon-weibiaoti1 imgcom"></i></div>
         </div>
         <p>添加详情</p>
       </div>
     </div>
-    <div class="HangUp-box" v-if="From=='HangUp'">
+    <!--<div class="HangUp-box" v-if="From=='HangUp'">
       <div class="one-box" @click="toList">
         <div class="box">
           <div class="top"><i class="iconfont icon-liebiaolist29 imglist"></i></div>
         </div>
         <p>查看物品列表</p>
       </div>
-      <div class="two-box">
+      <div class="two-box" @click="toReceipt">
         <div class="box">
           <div class="top"><i class="iconfont icon-xiaopiaodayin imgtick"></i></div>
         </div>
         <p>查看收单小票</p>
       </div>
-    </div>
+    </div>-->
   </div>
 </template>
 <script>
   export default {
     data(){
       return{
-        From:'',
-        orderNumber:'',
+        Items:'',
+        SelectData:'',
       }
     },
     created(){
-      this.From=this.WhereFrom;
-      this.orderNumber=this.OrderNumber;
+      this.Items=this.OrderData;
     },
     props:{
-      OrderNumber:{
-        type:String,
+      OrderData:{
+        type:Object,
         required:true
       },
-      WhereFrom:{
-        type:String,
+      FinishSelect:{
+        type:Array,
         required:true
       }
     },
     methods:{
-      toAddClothes(){
+      /*toAddClothes(){
         this.$router.push({ name: 'AddClothes', params: { OrderName:this.orderNumber,from:this.From }});
+      },*/
+      toClothes(){
+        if(this.$route.name!='AllOrderDetails'){
+          let orderId = this.OrderData.id;
+          this.$router.push({name:'ClothesList',params: { Items:this.Items,from:this.From,SelectData:this.FinishSelect,OrderId: orderId}})
+        }
       },
-      toAddDetails(){
-        this.$router.push({name:'ClothesList',params: { OrderName:this.orderNumber,from:this.From }})
+     /* toReceipt(){
+        this.$router.push({name: 'Receipt',params:{Items:this.OrderData}});
       },
       toList(){
-        this.$router.push({name:'ClothesList',params: { OrderName:this.orderNumber,from:this.From }})
-      }
+        let orderId = this.OrderData.id;
+        this.$router.push({name:'HangUpList',params: { Items:this.Items,from:this.From,SelectData:this.FinishSelect,OrderId: orderId}})
+      }*/
     }
   }
 </script>
@@ -92,6 +98,11 @@
       width: px2rem(246);
       text-align: center;
     }
+    .add-details-box{
+      width: px2rem(246);
+      text-align: center;
+      margin: auto;
+    }
     .box{
       width: 100%;
       height: px2rem(234);
@@ -121,7 +132,7 @@
       @include font(75)
     }
     .Site-box{
-      overflow: hidden;
+     width: 100%;
     }
     .HangUp-box{
       overflow: hidden;

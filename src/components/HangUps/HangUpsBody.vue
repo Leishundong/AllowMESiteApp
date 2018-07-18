@@ -1,12 +1,12 @@
 <template>
   <div class="box">
     <div class="title">
-      <p>衣物总计：<span>3</span></p>
+      <p>衣物总计：<span>{{ItemData.items.length}}</span></p>
       <p>衣物条形码：</p>
     </div>
-    <div class="bar-code-box" v-for="n in parseInt(8)">
-      <div class="top"><span>{{n}}</span> </div>
-      <img class="img" src="../../../static/img/BarCode.png"/>
+    <div class="bar-code-box" v-for="(n,index) in ItemData.items">
+      <div class="top"><span>{{index+1}}</span></div>
+      <span class="span">{{n.barCode}}</span>
       <div class="line"></div>
     </div>
   </div>
@@ -17,6 +17,12 @@
     data(){
       return{
 
+      }
+    },
+    props:{
+      ItemData:{
+        type:Object,
+        required:true
       }
     },
     methods:{
@@ -47,13 +53,12 @@
       margin-left: px2rem(40);
       .line{
         width: 100%;
+        margin-top: px2rem(30);
         border: px2rem(1) solid #cccccc;
-        margin-bottom: px2rem(33);
       }
-      .img{
-        margin-top: px2rem(-20);
-        margin-left: px2rem(90);
-        color: black;
+      .span{
+        @include font(6);
+        margin-left: px2rem(60)
       }
       .top{
         position: relative;

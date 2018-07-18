@@ -77,7 +77,7 @@
         }
       },
       finishAdd(){
-        this.$router.push({name:'Details'});
+        this.$router.push({name:'Details',params: { SelectData:this.SelectData}});
       },
       finishEdit(){
         if(this.$route.name == 'AddDetails'){
@@ -98,7 +98,7 @@
   @import "~common/css/variable";
   .foot-box{
     position: absolute;
-    bottom: px2rem(5);
+    bottom: px2rem(0);
     width: 100%;
     .clothes-list{
       .receipt{

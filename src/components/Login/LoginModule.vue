@@ -1,13 +1,60 @@
 <template>
   <div class="Login-box">
-    <span>工号:</span><input/>
+    <span>工号:</span><input v-model="UserName"/>
     <div class="line"></div>
-    <span>密码:</span><input type="password"/>
-    <button class="button">登录</button>
+    <span>密码:</span><input type="password" v-model="Password" />
+    <button class="button" @click="Loging">登录</button>
   </div>
 </template>
 <script>
-
+  import SrcData from "../../json/src.json"
+  export default {
+    name:'Login',
+    data(){
+      return{
+        UserName:'',
+        Password:'',
+      }
+    },
+    methods:{
+      Loging(){
+        let src = SrcData.LinkerSrc.AtAll.Http+SrcData.LinkerSrc.Login.http;
+        this.$ajax({
+          method: 'post',
+          url: src,
+          params:{
+            username: this.UserName,
+            password: this.Password
+          }
+        }).then( res => {
+          let token = res.headers['x-auth-token'];
+          this.$token.getToken(token);
+          this.$alert("登陆成功").then(sucess => {
+            this.getInfo();
+            this.$router.push({name:'Home'})
+          })
+        })
+          .catch( res => {
+              this.$alert(res.response.data.msg).then(()=>{
+                this.UserName = '';
+                this.Password = ''
+              })
+          })
+      },
+      getInfo(){
+        let src = SrcData.LinkerSrc.AtAll.Http+SrcData.LinkerSrc.Info.http;
+        this.$ajax({
+          method:'post',
+          url:src,
+          headers: {'x-auth-token': this.$token.token},
+        }).then(res=>{
+          let accountId = res.data.data.accountId;
+          this.$token.getAccountId(accountId);
+        }).catch(res=>{
+        })
+      }
+    }
+  }
 </script>
 <style lang="scss" rel="stylesheet/scss" scoped>
   @import "~common/css/mixin";
@@ -31,6 +78,8 @@
       @include font(5);
     }
     .button{
+      outline: none;
+      border: none;
       background: $login-color;
       text-align: center;
       color: #ffffff;

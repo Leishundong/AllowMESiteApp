@@ -1,31 +1,28 @@
 <template>
   <div class="body-box" v-if="Isshow">
-    <div class="router-box">
+   <!-- <div class="router-box">
       <div class="router-link" @click="toInbound">
         <div class="center">
-          <img :src="InboundImg"/>
+          <img class="img" :src="InboundImg"/>
           <p>入站</p>
         </div>
       </div>
-      <div class="router-link router-left" @click="toHangUp">
+      <div class="router-link router-left" @click="toAllOrder">
         <div class="center">
-          <img :src="HangUpImg"/>
-          <p>上挂</p>
+          <img class="img" :src="HangUpImg"/>
+          <p>全部订单</p>
         </div>
       </div>
       <div class="router-link router-top" @click="toHangUps">
         <div class="center">
-          <img :src="HangUpImg"/>
+          <img class="img" :src="HangUpImg"/>
           <p>整单上挂</p>
         </div>
       </div>
-      <div class="router-link router-top router-left">
-        <div class="center">
-          <img :src="SetUpImg"/>
-          <p>设置</p>
-        </div>
-      </div>
-    </div>
+    </div>-->
+    <button @click="toInbound">入站</button>
+    <button @click="toHangUps">上挂</button>
+    <button @click="toAllOrder">全部订单</button>
   </div>
 </template>
 <script>
@@ -58,8 +55,9 @@
         this.$router.push({ name: 'Inbound', params: { from:'InBound' }});
         this.Isshow = false;
       },
-      toHangUp(){
-        this.$router.push({ name: 'Inbound', params: { from:'HangUp' }});
+      toAllOrder(){
+        this.$router.push({ name: 'AllOrder', params: { from:'AllOrder' }});
+        this.Isshow = false;
       },
       toHangUps(){
         this.$router.push({ name: 'HangUps',params: { from:'HangUps' }});
@@ -78,10 +76,28 @@
 <style lang="scss" rel="stylesheet/scss">
   @import "~common/css/mixin";
   @import "~common/css/variable";
+  @font-face {
+    font-family: MRBlod;
+    src: url('../../../static/font/MRBlod.ttf');
+  }
   .body-box{
-    margin-top: px2rem(121);
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
     background: transparent;
-    .router-box{
+    button{
+      margin-top: px2rem(60);
+      font-family: MRBlod;
+      @include font(17);
+      color: white;
+      background: $color-background-general;
+      height: px2rem(192);
+      width: px2rem(694);text-align: center;
+      border: none;
+      border-radius: px2rem(30);
+    }
+    /*.router-box{
       margin-left: px2rem(36);
       .router-left{
         margin-left: px2rem(72);
@@ -112,6 +128,6 @@
         }
 
       }
-    }
+    }*/
   }
 </style>

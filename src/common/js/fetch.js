@@ -1,10 +1,10 @@
 import axios from 'axios'
 import qs from 'qs';
-import {baseURL} from 'api/config';
+//import {baseURL} from 'api/config';
 import {getLimited,setLimited,getLimitedUrl,setLimitedUrl,setToken,getToken} from 'common/js/auth';
 
 
-
+let baseURL='https://rtest.rwlai.com/rwlmall'
 let config={
   loginUrl:'',  //登陆地址
   loginApi:`${baseURL}/wechatmini/login`,    //登陆API
@@ -27,6 +27,8 @@ service.interceptors.request.use(config => {  // request拦截器
      config.data = qs.stringify(config.data);
    }
   if (getToken()) {
+     console.log(1000)
+    console.log(getToken())
    config.headers['x-auth-token'] = getToken(); // 让每个请求携带自定义token 请根据实际情况自行修改
    }
 

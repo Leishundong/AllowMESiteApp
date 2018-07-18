@@ -10,6 +10,7 @@
 <script>
   import imgData from "../../json/img.json"
   import LoginModule from "./LoginModule.vue"
+
   export default {
     name: 'Login',
     components:{
@@ -22,6 +23,9 @@
     },
     created(){
       this.getimg();
+      this.$router.push({
+        path:this.$route.fullPath
+      });
     },
     methods:{
       getimg(){
