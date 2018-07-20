@@ -2,7 +2,7 @@
   <div class="Login-box">
     <span>工号:</span><input v-model="UserName"/>
     <div class="line"></div>
-    <span>密码:</span><input type="password" v-model="Password" />
+    <span>密码:</span><input type="password" v-model="Password" ref="psw" />
     <button class="button" @click="Loging">登录</button>
   </div>
 </template>
@@ -36,8 +36,7 @@
         })
           .catch( res => {
               this.$alert(res.response.data.msg).then(()=>{
-                this.UserName = '';
-                this.Password = ''
+               this.$refs.psw.focus()
               })
           })
       },

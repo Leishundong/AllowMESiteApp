@@ -12,6 +12,7 @@
         </div>
       </div>
     </div>
+    <div class="order-list-msg" v-if="getShowList()"><span>暂无该状态订单</span></div>
     <order-list class="top" v-bind:OrderLister="OrderLister" v-bind:WhereFrom="WhereFrom" v-if="OrderLister!=''"></order-list>
   </div>
 </template>
@@ -158,7 +159,7 @@
             type:type
           }
         }).then(res=>{
-          if(res.data.data!=''&&res.data.data!=null){
+          if(res.data.data!=null){
             let allOrder = res.data.data;
             for (let v of allOrder){
               if(v.id.indexOf('A03')==-1){
@@ -180,6 +181,13 @@
             }
           });
         });
+      },
+      getShowList(){
+        if(this.OrderLister!=''){
+          return false
+        }else{
+          return true
+        }
       }
     }
   }
@@ -190,6 +198,15 @@
   @import "~common/css/variable";
 .order-list-box{
   background: $color-background-big;
+  min-height: 100%;
+  .order-list-msg{
+    margin-top: px2rem(504);
+    text-align: center;
+    span{
+      color: #787878;
+      @include font(5);
+    };
+  }
   .navigation-bar-box{
     position: fixed;
     width: 100%;

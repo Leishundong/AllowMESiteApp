@@ -144,7 +144,7 @@
               this.Arr = [];
               this.$msg.setShow('入站成功');
               this.$router.push({name:'Inbound'});
-          }else {
+          }else if(res.data.msg==null){
             this.$msg.setShow('数据异常，请重试')
           }
         }).catch(res=>{
