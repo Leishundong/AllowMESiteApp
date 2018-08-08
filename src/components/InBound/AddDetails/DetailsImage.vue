@@ -62,7 +62,7 @@
     },
     computed:{
       checkShow(){
-        if(this.$route.name=="MallDetails"){
+        if(this.$route.name=="MallDetails"||this.IsShow == false){
           return false
         }else {
           return true
@@ -81,6 +81,9 @@
       OrderId:{
         type:String,
         required:true
+      },
+      IsShow:{
+        type:Boolean
       }
     },
 

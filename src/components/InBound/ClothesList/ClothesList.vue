@@ -128,7 +128,6 @@
           src = SrcData.LinkerSrc.AtAll.Http+SrcData.LinkerSrc.InBound.http;
           obj = this.laundryOrderItemList;
         }
-        console.log(obj);
         this.$ajax({
           method:'post',
           url: src,
@@ -137,13 +136,13 @@
           data: obj
         }).then(res=>{
           if(res.data.msg=='成功'){
-              this.laundryOrderItemList = [];
-              this.Img = [];
-              this.Items = '';
-              this.OrderData= '';
-              this.Arr = [];
-              this.$msg.setShow('入站成功');
-              this.$router.push({name:'Inbound'});
+            this.laundryOrderItemList = [];
+            this.Img = [];
+            this.Items = '';
+            this.OrderData= '';
+            this.Arr = [];
+            this.$msg.setShow('入站成功');
+            this.$router.push({name:'Inbound'});
           }else if(res.data.msg==null){
             this.$msg.setShow('数据异常，请重试')
           }

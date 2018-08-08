@@ -4,7 +4,7 @@
     <div class="body">
       <search-bar v-on:BarCode="getBarCode" v-bind:barCode="BarCode" v-if="IsShow" v-bind:WhereFrom="WhereFrom"></search-bar>
       <clothes-details  v-on:Before="getBeforeData"  v-bind:BeforeData="BeforeData" v-if="IsShow" v-bind:AfterData="AfterData" v-on:After="getAfterData"></clothes-details>
-      <details-image  v-on:SrcData="getSrcData" v-bind:OrderId="OrderId"  v-on:Remarks="getRemarks" v-bind:srcdata="srcdata" v-bind:remark="remark" v-if="remark!=null"></details-image>
+      <details-image  v-on:SrcData="getSrcData" v-bind:OrderId="OrderId" v-bind:IsShow="IsShow"  v-on:Remarks="getRemarks" v-bind:srcdata="srcdata" v-bind:remark="remark" v-if="remark!=null"></details-image>
       <div>
         <div class="height "></div>
         <div class="operate ">

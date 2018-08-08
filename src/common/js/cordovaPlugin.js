@@ -9,7 +9,8 @@ export function Photograph(){
     targetHeight: 200,
   };
   let promise=new Promise((resolve,reject)=>{
-    navigator.camera.getPicture((data)=>{
+    navigator.camera.getPicture(
+      (data)=>{
       console.log('js');
       let canvas = document.createElement('CANVAS'),
         ctx = canvas.getContext('2d'),
@@ -28,9 +29,12 @@ export function Photograph(){
         canvas = null;
       };
       img.src = data;
-    },(err)=>{    //err===20时为无相机权限
+    },
+      (err)=>{    //err===20时为无相机权限
      reject(err);
-    },options)
+    },
+      options
+    )
   });
   return promise;
 }
