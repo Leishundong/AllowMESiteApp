@@ -8,6 +8,7 @@
 </template>
 <script>
   import SrcData from "../../json/src.json"
+  import mp3 from "../../json/img.json"
   export default {
     name:'Login',
     data(){
@@ -17,9 +18,28 @@
       }
     },
     methods:{
+     playAudio(src) {
+    // Play the audio file at url
+    let  media = new Media(src,
+      // success callback
+      function () {
+        console.log("playAudio():Audio Success");
+      },
+      // error callback
+      function (err) {
+        console.log("playAudio():Audio Error: " + err);
+      }
+    );
+    console.log(media);
+    // Play audio
+    media.play();
+  },
       Loging(){
-        let src = SrcData.LinkerSrc.AtAll.Http+SrcData.LinkerSrc.Login.http;
-        this.$ajax({
+      let src = SrcData.LinkerSrc.AtAll.Http+SrcData.LinkerSrc.Login.http;
+        let mp3s = "./Schnappi.mp3";
+        console.log(mp3s);
+        this.playAudio(mp3s);
+        /*this.$ajax({
           method: 'post',
           url: src,
           params:{
@@ -38,7 +58,7 @@
               this.$alert(res.response.data.msg).then(()=>{
                this.$refs.psw.focus()
               })
-          })
+          })*/
       },
       getInfo(){
         let src = SrcData.LinkerSrc.AtAll.Http+SrcData.LinkerSrc.Info.http;
@@ -49,6 +69,16 @@
         }).then(res=>{
           let accountId = res.data.data.accountId;
           this.$token.getAccountId(accountId);
+          window.JPush.setAlias({sequence: 1, alias:accountId},
+            (result) => {
+              console.log('res',result);
+              let sequence = result.sequence;
+              let alias = result.alias;
+            }, (error) => {
+              console.log('err',error);
+              let sequence = error.sequence;
+              let errorCode = error.code;
+            });
         }).catch(res=>{
         })
       }

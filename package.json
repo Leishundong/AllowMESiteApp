@@ -17,9 +17,14 @@
     "cordova-browser": "~4.1.0",
     "cordova-ios": "~4.3.1",
     "cordova-plugin-backbutton": "^0.3.0",
+    "cordova-plugin-device": "^2.0.2",
+    "cordova-plugin-file": "^4.3.3",
+    "cordova-plugin-jcore": "^1.1.12",
+    "cordova-plugin-media": "^3.0.1",
     "cordova-plugin-whitelist": "1",
     "fastclick": "1.0.6",
     "hoek": "^5.0.3",
+    "jpush-phonegap-plugin": "^3.3.2",
     "qiniu-js": "^2.4.0",
     "qs": "6.5.2",
     "vconsole": "3.2.0",
@@ -85,7 +90,12 @@
     ],
     "plugins": {
       "cordova-plugin-whitelist": {},
-      "cordova-plugin-backbutton": {}
+      "cordova-plugin-backbutton": {},
+      "cordova-plugin-jcore": {},
+      "jpush-phonegap-plugin": {
+        "APP_KEY": "60e98495e72135323235e2ab"
+      },
+      "cordova-plugin-media": {}
     }
   }
 }

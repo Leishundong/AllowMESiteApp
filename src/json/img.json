@@ -6,6 +6,9 @@
        "src":"./static/img/LOGO2.png",
        "size":"561×165"
      },
+    "Mp3":{
+      "src": "./static/haha.mp3"
+    },
     "BarCode":{
       "id":"BarCode",
       "land":"/searchBar",

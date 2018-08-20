@@ -20,7 +20,6 @@ Vue.prototype.$ajax = axios;
 Vue.prototype.$token = token;
 Vue.config.productionTip = false;
 fastclick.attach(document.body);
-
 let vConsole=new VConsole({maxLogNumber: 5000});  //console.log调试工具，发布时需注释
 
 

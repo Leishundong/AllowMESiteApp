@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.cordova.order" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>让我来站点</name>
+<widget id="com.Rwlai.SiteApp" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>让我来站点App</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
     </description>
@@ -29,6 +29,11 @@
         <allow-intent href="itms-apps:*" />
     </platform>
     <plugin name="cordova-plugin-backbutton" spec="^0.3.0" />
+    <plugin name="cordova-plugin-jcore" spec="^1.1.12" />
+    <plugin name="jpush-phonegap-plugin" spec="^3.3.2">
+        <variable name="APP_KEY" value="60e98495e72135323235e2ab" />
+    </plugin>
+    <plugin name="cordova-plugin-media" spec="^3.0.1" />
     <engine name="ios" spec="~4.3.1" />
     <engine name="android" spec="^6.1.2" />
     <engine name="browser" spec="~4.1.0" />

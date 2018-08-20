@@ -7,22 +7,38 @@
     "files": {}
   },
   "installed_plugins": {
+    "cordova-plugin-backbutton": {
+      "PACKAGE_NAME": "com.Rwlai.SiteApp"
+    },
     "cordova-plugin-barcodescanner": {
-      "PACKAGE_NAME": "com.cordova.order"
+      "PACKAGE_NAME": "com.Rwlai.SiteApp"
     },
     "cordova-plugin-camera": {
-      "PACKAGE_NAME": "com.cordova.order"
+      "PACKAGE_NAME": "com.Rwlai.SiteApp"
     },
     "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "com.cordova.order"
+      "PACKAGE_NAME": "com.Rwlai.SiteApp"
     },
-    "cordova-plugin-backbutton": {
-      "PACKAGE_NAME": "com.cordova.order"
+    "cordova-plugin-jcore": {
+      "PACKAGE_NAME": "com.Rwlai.SiteApp"
+    },
+    "jpush-phonegap-plugin": {
+      "APP_KEY": "60e98495e72135323235e2ab",
+      "PACKAGE_NAME": "com.Rwlai.SiteApp"
+    },
+    "cordova-plugin-media": {
+      "PACKAGE_NAME": "com.Rwlai.SiteApp"
     }
   },
   "dependent_plugins": {
     "cordova-plugin-compat": {
-      "PACKAGE_NAME": "com.cordova.order"
+      "PACKAGE_NAME": "com.Rwlai.SiteApp"
+    },
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "com.Rwlai.SiteApp"
+    },
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "com.Rwlai.SiteApp"
     }
   }
 }
