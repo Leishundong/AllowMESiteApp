@@ -18,9 +18,9 @@
     mounted(){
       document.addEventListener("deviceready",()=>{
         this.onDeviceReady();
-        window.plugins.jPushPlugin.init();//初始化也没有成功
+        window.plugins.jPushPlugin.init();
         window.plugins.jPushPlugin.getRegistrationID(res=> {
-          console.log('jid',res);//这里打出的结果为空字符串
+          console.log('jid',res);
         });
       },false);
     },
@@ -28,20 +28,22 @@
       onDeviceReady(){
         document.addEventListener("backbutton", this.onBackKeyDown, false);
         document.addEventListener("jpush.receiveRegistrationId", function (event) {
-          console.log("receiveRegistrationId" + JSON.stringify(event));
         }, false);
         document.addEventListener("jpush.receiveMessage",(event)=>{
-          let message=event.message;
+          console.log("receiveMessage",event);
           this.playAudio();
-          console.log('receiveMessage',message);
+        }, false);
+        document.addEventListener("jpush.openNotification", (event)=>{
+          console.log("openNotification",event);
+        }, false);
+        document.addEventListener("jpush.receiveNotification",  (event)=>{
+          console.log("receiveNotification",event);
+          this.playAudio();
         }, false);
         this.initJPush();
-        this.playAudio();
       },
       initJPush(){
         if ('JPush' in window) {
-          console.log(JPush);
-          console.log('initialize JPush...');
           try {
             window.JPush.init();
             window.JPush.setDebugMode(true);
@@ -92,7 +94,7 @@
         }
       },
       playAudio() {
-        let src = '/android_asset/www/static/haha.mp3';
+        let src = '/android_asset/www/static/haha2.mp3';
         // Play the audio file at url
         let media = new Media(src,
           // success callback

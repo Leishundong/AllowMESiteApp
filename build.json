@@ -1,0 +1,10 @@
+{
+  "android": {
+    "release": {
+      "keystore": "lsdkey.keystore",
+      "alias": "mykey",
+      "storePassword": "lsd715613522",
+      "password": "lsd715613522"
+    }
+  }
+}
