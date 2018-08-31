@@ -29,6 +29,7 @@
           }
         }).then( res => {
           let token = res.headers['x-auth-token'];
+          console.log(res);
           this.$token.getToken(token);
           this.$alert("登陆成功").then(sucess => {
             this.getInfo();
@@ -48,13 +49,26 @@
           url:src,
           headers: {'x-auth-token': this.$token.token},
         }).then(res=>{
+          console.log(res);
           let accountId = res.data.data.accountId;
           this.$token.getAccountId(accountId);
-          window.JPush.setAlias({sequence: 1, alias:accountId},
-            (result) => {
-            }, (error) => {
-              console.log('err',error);
-            });
+          let storeSrc = SrcData.LinkerSrc.AtAll.Http+SrcData.LinkerSrc.storeFindOne.http;
+          this.$ajax({
+            method:'post',
+            url:storeSrc,
+            headers: {'x-auth-token': this.$token.token},
+            params:{
+              storeid:accountId
+            }
+          }).then((res)=>{
+            let number = res.data.data.number;
+            window.JPush.setAlias({sequence: 1, alias:number},
+              (result) => {
+
+              }, (error) => {
+                console.log('err',error);
+              });
+          });
         }).catch(res=>{
         })
       }

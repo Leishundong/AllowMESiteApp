@@ -31,14 +31,15 @@
         }, false);
         document.addEventListener("jpush.receiveMessage",(event)=>{
           console.log("receiveMessage",event);
-          this.playAudio();
         }, false);
         document.addEventListener("jpush.openNotification", (event)=>{
           console.log("openNotification",event);
         }, false);
         document.addEventListener("jpush.receiveNotification",  (event)=>{
           console.log("receiveNotification",event);
-          this.playAudio();
+         setTimeout(()=>{
+           this.playAudio();
+         },2000)
         }, false);
         this.initJPush();
       },
@@ -94,7 +95,7 @@
         }
       },
       playAudio() {
-        let src = '/android_asset/www/static/haha2.mp3';
+        let src = '/android_asset/www/static/advice.mp3';
         // Play the audio file at url
         let media = new Media(src,
           // success callback

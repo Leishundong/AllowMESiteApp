@@ -117,6 +117,7 @@
           }/*else if(this.Where == 'HangUp'){
           this.$router.push({ name: 'HangUpDe', params: { OrderData:Order,from:this.Where}});
         }*/else{
+          console.log(Order);
             if(Order.id.indexOf('A10') != -1){
               this.$router.push({ name: 'MallDetails', params: { OrderData:Order}});
               this.$emit('OrderNumber',Order.number);

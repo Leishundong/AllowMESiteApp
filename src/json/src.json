@@ -53,6 +53,9 @@
     },
     "ImgToken":{
       "http":"/rwlmall/file/uploadtoken"
+    },
+    "storeFindOne":{
+      "http":"/rwlmall/store/findone"
     }
   }
 }

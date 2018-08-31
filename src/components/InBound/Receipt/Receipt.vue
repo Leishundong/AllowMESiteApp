@@ -6,7 +6,7 @@
       <div class="message">
         <p>让我来信息科技有限公司</p>
         <p>订单号：<span>{{Items.number}}</span></p>
-        <p>服务品牌：<span>122323123123</span></p>
+        <p>服务品牌：<span>{{Items.serviceStore}}</span></p>
         <p>热线电话：<span>122323123123</span></p>
 
         <p class="top">衣物详情</p>
@@ -24,7 +24,7 @@
         <p>联系方式：<span>{{Items.phone}}</span></p>
         <p class="left">------------------------------------------------</p>
         <p>折扣方式：<span>折扣卷</span></p>
-        <p>实收金额：<span>300</span></p>
+        <p>实收金额：<span>{{Items.amount/100}}</span></p>
         <p>付款方式：<span v-text="getPayType(Items.payMode)"></span></p>
         <p>付款时间：<span>立刻付款</span></p>
         <p>物流备注：<span>无</span></p>
@@ -59,6 +59,7 @@
         if( vm.WhereFrom==''){
           vm.WhereFrom = to.params.From;
           vm.Items = to.params.Items;
+          console.log(vm.Items);
           if(vm.WhereFrom == 'HangUp'){
             vm.IsShow = false
           }else {
