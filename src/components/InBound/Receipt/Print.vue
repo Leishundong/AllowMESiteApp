@@ -24,11 +24,77 @@
       Items:{
         type:Object,
         required:true
+      },
+      clothesList:{
+        type:Array
       }
     },
     methods: {
       print(){
-        this.$emit('Status','print');
+        let Items = this.Items;
+        let clothesList = this.clothesList;
+        let printObj={};
+        let clothes = [];
+        Items.items.forEach((item)=>{
+         clothesList.forEach((clothe)=>{
+           if(item.id===clothe.id){
+             let defect = this.filterClothesDefect(clothe.flaw);
+             let washingEffect = this.filterClothesDefect(clothe.washingEffect);
+             clothes.push({
+               clothesId:clothe.barCode,
+               clothesName:item.laundryProduct.name,
+               clothesGrade:'',
+               clothesPrice:(item.laundryProduct.price/100).toFixed(2),
+               clothesDefect:defect,
+               clothesWashingEffect:washingEffect,
+               clothesColor:''
+             })
+           }
+         })
+        });
+        printObj.orderNumber = Items.number;
+        printObj.clothingQuantity = Items.items.length;
+        printObj.clothingDate = this.getNowData();
+        printObj.takingClothingDate = this.getNowData();
+        printObj.customerName=Items.name;
+        printObj.customerPhone = Items.phone;
+        printObj.customerAddress = Items.address;
+        printObj.totalPrice = (Items.amount/100).toFixed(2);
+        printObj.servicePrice = '';
+        printObj.storeAddress=this.$token.store.area;
+        printObj.storePhone=this.$token.store.phone;
+        printObj.clerk=this.$token.store.people;
+        printObj.storeNumber=this.$token.store.number;
+        printObj.clothes = clothes;
+//TODO 打印输出
+       /* this.$emit('Status','print');*/
+      },
+      filterClothesDefect(defect){
+        let defects = defect.split(',');
+        let defectString = '';
+        defects.forEach(item=>{
+          if(item){
+            defectString = defectString+item+'|';
+          }
+        });
+       return defectString.substr(0,defectString.length-1);
+      },
+      getNowData(){
+        let date = new Date();
+        let seperator1 = "-";
+        let seperator2 = ":";
+        let month = date.getMonth() + 1;
+        let strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+          month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+          strDate = "0" + strDate;
+        }
+        let currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+          + " " + date.getHours() + seperator2 + date.getMinutes()
+          + seperator2 + date.getSeconds();
+        return currentdate;
       },
       cancels(){
         this.$emit('Status','cancels');

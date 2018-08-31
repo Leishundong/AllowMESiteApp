@@ -62,6 +62,8 @@
             }
           }).then((res)=>{
             let number = res.data.data.number;
+            this.$token.getStore(res.data.data);
+            console.log('hahha',this.$token.store);
             window.JPush.setAlias({sequence: 1, alias:number},
               (result) => {
 

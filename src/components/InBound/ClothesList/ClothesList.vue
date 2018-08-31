@@ -155,7 +155,8 @@
         })
       },
       toReceipt(){
-        this.$router.push({name: 'Receipt',params:{Items:this.OrderData,From:this.WhereFrom}});
+        console.log(this.laundryOrderItemList)
+        this.$router.push({name: 'Receipt',params:{Items:this.OrderData,From:this.WhereFrom,laundryOrderItemList:this.laundryOrderItemList}});
       },
       clikeInBound(){
         this.$alert("是否确定入站",['是','否']).then(()=>{

@@ -95,7 +95,8 @@
       "jpush-phonegap-plugin": {
         "APP_KEY": "60e98495e72135323235e2ab"
       },
-      "cordova-plugin-media": {}
+      "cordova-plugin-media": {},
+      "cordova-plugin-bluetooth-serial": {}
     }
   }
 }

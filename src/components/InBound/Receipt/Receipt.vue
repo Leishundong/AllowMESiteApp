@@ -1,7 +1,7 @@
 <template>
   <div class="box" v-if="Items!=''">
     <head-bar></head-bar>
-    <print v-bind:Items="Items" v-on:Status="getStatus" v-if="ShowPrint"></print>
+    <print v-bind:Items="Items" v-bind:clothesList="clotheList" v-on:Status="getStatus" v-if="ShowPrint"></print>
     <div class="message-box">
       <div class="message">
         <p>让我来信息科技有限公司</p>
@@ -51,15 +51,18 @@
         WhereFrom:'',
         Items:'',
         IsShow:'',
-        ShowPrint:''
+        ShowPrint:'',
+        clotheList:''
       }
     },
     beforeRouteEnter(to,from,next){
       next(vm => {
         if( vm.WhereFrom==''){
+          console.log(121212)
           vm.WhereFrom = to.params.From;
           vm.Items = to.params.Items;
-          console.log(vm.Items);
+          vm.clotheList = to.params.laundryOrderItemList;
+          console.log(vm.clotheList);
           if(vm.WhereFrom == 'HangUp'){
             vm.IsShow = false
           }else {

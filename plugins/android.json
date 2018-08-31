@@ -28,6 +28,9 @@
     },
     "cordova-plugin-media": {
       "PACKAGE_NAME": "com.Rwlai.SiteApp"
+    },
+    "cordova-plugin-bluetooth-serial": {
+      "PACKAGE_NAME": "com.Rwlai.SiteApp"
     }
   },
   "dependent_plugins": {
