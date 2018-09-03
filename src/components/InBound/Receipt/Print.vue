@@ -21,16 +21,13 @@
       }
     },
     props:{
-      Items:{
-        type:Object,
-        required:true
-      },
-      clothesList:{
-        type:Array
+      receiptData:{
+        type:Object
       }
     },
     methods: {
       print(){
+        /*console.log(this.Items);
         let Items = this.Items;
         let clothesList = this.clothesList;
         let printObj={};
@@ -61,15 +58,17 @@
         printObj.customerAddress = Items.address;
         printObj.totalPrice = (Items.amount/100).toFixed(2);
         printObj.servicePrice = '';
-        printObj.storeAddress=this.$token.store.area;
+        printObj.storeAddress=this.$token.store.address;
         printObj.storePhone=this.$token.store.phone;
         printObj.clerk=this.$token.store.people;
         printObj.storeNumber=this.$token.store.number;
         printObj.clothes = clothes;
 //TODO 打印输出
-       /* this.$emit('Status','print');*/
+        console.log(this.$token.store)
+       /!* this.$emit('Status','print');*!/*/
+        console.log(this.receiptData)
       },
-      filterClothesDefect(defect){
+     /* filterClothesDefect(defect){
         let defects = defect.split(',');
         let defectString = '';
         defects.forEach(item=>{
@@ -95,7 +94,7 @@
           + " " + date.getHours() + seperator2 + date.getMinutes()
           + seperator2 + date.getSeconds();
         return currentdate;
-      },
+      },*/
       cancels(){
         this.$emit('Status','cancels');
       }

@@ -1,50 +1,60 @@
 <template>
   <div class="box" v-if="Items!=''">
     <head-bar></head-bar>
-    <print v-bind:Items="Items" v-bind:clothesList="clotheList" v-on:Status="getStatus" v-if="ShowPrint"></print>
+    <print  v-bind:receiptData="receiptData" v-on:Status="getStatus" v-if="ShowPrint"></print>
+    <look-remark v-bind:remark="remark" v-if="remarkFlag" v-on:Status="getRemarkStatus"></look-remark>
     <div class="message-box">
       <div class="message">
-        <p>让我来信息科技有限公司</p>
-        <p>订单号：<span>{{Items.number}}</span></p>
-        <p>服务品牌：<span>{{Items.serviceStore}}</span></p>
-        <p>热线电话：<span>122323123123</span></p>
-
+        <p>交易单号：<span v-text="receiptData.orderNumber"></span></p>
+        <p>服务热线：<span v-text="receiptData.servicePhone"></span></p>
+        <p>本店地址：<span v-text="receiptData.storeAddress"></span></p>
+        <p>服务内容：<span v-text="receiptData.serviceContent"></span></p>
         <p class="top">衣物详情</p>
-        <p class="left">------------------------------------------------</p>
-
-
-        <p class="top">总数：<span>{{Items.items.length}}</span><span>件</span></p>
-        <p>总价：<span v-text="getNum()"></span><span>元</span></p>
-        <p class="left">------------------------------------------------</p>
-        <p>收单时间：<span>{{Items.createtime|formatDate}}</span></p>
-        <p>收单人：<span>是D是</span></p>
-        <p>条码号：<span>是D是</span></p>
-        <p>用户姓名：<span>{{Items.name}}</span></p>
-        <p>收单地址：<span>{{Items.address}}</span></p>
-        <p>联系方式：<span>{{Items.phone}}</span></p>
-        <p class="left">------------------------------------------------</p>
-        <p>折扣方式：<span>折扣卷</span></p>
-        <p>实收金额：<span>{{Items.amount/100}}</span></p>
-        <p>付款方式：<span v-text="getPayType(Items.payMode)"></span></p>
-        <p>付款时间：<span>立刻付款</span></p>
-        <p>物流备注：<span>无</span></p>
+        <p class="line-top">-----------------------------------------------------</p>
+        <p class=""><span>名称/衣物条码</span><span class="price">价格</span></p>
+        <div class="clothes">
+          <div v-for="item in receiptData.clothes">
+            <p><span>{{item.clothesName}}（<span v-text="item.clothesId"></span>）</span><span class="price" v-text="item.clothesPrice"></span></p>
+            <p>-瑕疵：<span v-text="item.clothesDefect"></span></p>
+            <p>-预计洗后效果：<span v-text="item.clothesWashingEffect"></span></p>
+          </div>
+        </div>
+        <p class="line-top">-----------------------------------------------------</p>
+        <p class="line-top">总数：<span v-text="receiptData.clothingQuantity"></span><span>件</span></p>
+        <p class="top">总价：<span v-text="receiptData.totalPrice"></span><span>元</span></p>
+        <p class="line-top">-----------------------------------------------------</p>
+        <p>收单时间：<span v-text="receiptData.singleTime"></span></p>
+        <p>收单人：<span v-text="receiptData.clerk"></span></p>
+        <p>用户姓名：<span v-text="receiptData.customerName"></span></p>
+        <p>收单地址：<span v-text="receiptData.customerAddress"></span></p>
+        <p>联系方式：<span v-text="receiptData.customerPhone"></span></p>
+        <p class="line-top">-----------------------------------------------------</p>
+        <div class="msg">
+          <p class="title">莫好克温馨提示</p>
+          <p>1、凭票取衣，此单遗失请立即到店挂失，以免被他人领取。</p>
+          <p>2、超过2000元的贵重衣服请选择保值洗涤。</p>
+          <p>3、衣服送洗请自行掏清口袋东西以免发生纠纷。</p>
+          <p>4、超过六个月未取取衣物，本店将不通知客户，自行处理。取衣时请当面确认洗涤质量、数量，有异议请当面提出。谢谢合作！</p>
+        </div>
       </div>
     </div>
     <div class="height"></div>
     <div class="operate" v-if="IsShow">
-      <button class="receipt">查看备注</button><button class="receipt left" @click="toReceipt">打印发票</button>
+      <button class="receipt" @click="checkRemark">查看备注</button><button class="receipt left" @click="toReceipt">打印发票</button>
     </div>
   </div>
 </template>
 <script>
   import HeadBar from "../../Common/HeadBar.vue"
+  import lookRemark from "../../Common/lookRemark.vue"
   import {formatDate} from '../../../common/js/data';
   import Print from './Print.vue'
   export default {
     name:'Receipt',
     components:{
       HeadBar,
-      Print
+      Print,
+      lookRemark
     },
     data(){
       return{
@@ -52,17 +62,24 @@
         Items:'',
         IsShow:'',
         ShowPrint:'',
-        clotheList:''
+        clotheList:'',
+        remarkFlag:'',
+        remark:'',
+        receiptData:{}
       }
     },
     beforeRouteEnter(to,from,next){
       next(vm => {
         if( vm.WhereFrom==''){
-          console.log(121212)
           vm.WhereFrom = to.params.From;
           vm.Items = to.params.Items;
           vm.clotheList = to.params.laundryOrderItemList;
-          console.log(vm.clotheList);
+          if(vm.Items.remark!=''&&to.params.remark=='无'){
+            vm.remark = vm.Items.remark;
+          }else {
+            vm.remark = to.params.remark
+          }
+          vm.getData();
           if(vm.WhereFrom == 'HangUp'){
             vm.IsShow = false
           }else {
@@ -78,6 +95,75 @@
       }
     },
     methods:{
+      getData(){
+        let Items = this.Items;
+        let clothesList = this.clotheList;
+        let printObj={};
+        let clothes = [];
+        Items.items.forEach((item)=>{
+          clothesList.forEach((clothe)=>{
+            if(item.id===clothe.id){
+              let defect = this.filterClothesDefect(clothe.flaw);
+              let washingEffect = this.filterClothesDefect(clothe.washingEffect);
+              clothes.push({
+                clothesId:clothe.barCode,
+                clothesName:item.laundryProduct.name,
+                clothesPrice:(item.laundryProduct.price/100).toFixed(2),
+                clothesDefect:defect,
+                clothesWashingEffect:washingEffect,
+              })
+            }
+          })
+        });
+        printObj.orderNumber = Items.number;
+        printObj.servicePhone='400-0878-315';
+        printObj.storeAddress=this.$token.store.address;
+        if(Items.type===1){
+          printObj.serviceContent='洗衣'
+        }else {
+          printObj.serviceContent='高端洗护'
+        }
+        printObj.clothingQuantity = Items.items.length;
+        printObj.singleTime = Items.deliveryDate;
+        printObj.customerName=Items.name;
+        printObj.customerPhone = Items.phone;
+        printObj.customerAddress = Items.address;
+        printObj.totalPrice = (Items.amount/100).toFixed(2);
+        printObj.storeNumber=this.$token.store.number;
+        printObj.clothes = clothes;
+        printObj.clerk = Items.receiptPeople;
+        this.receiptData = printObj;
+//TODO 打印输出
+        console.log(this.receiptData)
+        /* this.$emit('Status','print');*/
+      },
+      filterClothesDefect(defect){
+        let defects = defect.split(',');
+        let defectString = '';
+        defects.forEach(item=>{
+          if(item){
+            defectString = defectString+item+'|';
+          }
+        });
+        return defectString.substr(0,defectString.length-1);
+      },
+      getNowData(){
+        let date = new Date();
+        let seperator1 = "-";
+        let seperator2 = ":";
+        let month = date.getMonth() + 1;
+        let strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+          month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+          strDate = "0" + strDate;
+        }
+        let currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+          + " " + date.getHours() + seperator2 + date.getMinutes()
+          + seperator2 + date.getSeconds();
+        return currentdate;
+      },
       getNum(){
         let num = 0;
         let type = '';
@@ -102,6 +188,11 @@
           return type='微信支付'
         }
       },
+      getRemarkStatus(data){
+        if(data){
+          this.remarkFlag = false
+        }
+      },
       getStatus(data){
         if(data!=''){
           this.ShowPrint = false;
@@ -109,6 +200,9 @@
       },
       toReceipt(){
         this.ShowPrint = true;
+      },
+      checkRemark(){
+        this.remarkFlag = true
       }
     }
   }
@@ -141,14 +235,37 @@
         margin-left: px2rem(0);
       }
       .message{
-        margin-left: px2rem(60);
+        padding:0 px2rem(30);
         margin-top: px2rem(20);
+        .msg{
+          margin-top: px2rem(10);
+          width: 100%;
+          .title{
+            text-align: center;
+          }
+          p{
+            line-height: px2rem(35);
+          }
+        }
+        .clothes{
+          margin-top: px2rem(17);
+          p{
+            line-height: px2rem(30);
+          }
+        }
+        .price{
+          float: right;
+          margin-right: px2rem(67);
+        }
         .top{
-          margin-top: px2rem(50);
+          margin-top: px2rem(19);
+        }
+        .line-top{
+          margin-top: px2rem(10);
         }
         p{
           font-family: MRBlod ;
-          margin-top: px2rem(20);
+          margin-top: px2rem(5);
           @include font(-1);
         }
       }

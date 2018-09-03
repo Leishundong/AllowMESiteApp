@@ -2,12 +2,13 @@
   <div @click.stop @touchmove.prevent class="confirms">
     <div class="confirms-container zh-center" >
       <div class="content">
-        <span class="msg">请选择获取图片方式</span>
+        <span class="msg">备注</span>
+        <i class="iconfont icon-guanbi icon-class" @click="remarkCancel"></i>
       </div>
-      <div class="button-box">
-        <span class="button" @click="camera">拍照</span>
-        <span class="button" @click="photo">相册</span>
-        <span class="button" @click="cancels">取消</span>
+      <div class="remark">
+        <div class="remark-box">
+          <span v-text="this.remark"></span>
+        </div>
       </div>
     </div>
   </div>
@@ -16,17 +17,17 @@
   export default {
     data(){
       return {
+        Remark:''
+      }
+    },
+    props:{
+      remark:{
+        type:String
       }
     },
     methods: {
-      camera(){
-        this.$emit('Status','camera');
-      },
-      photo(){
-        this.$emit('Status','photo');
-      },
-      cancels(){
-        this.$emit('Status','cancel');
+      remarkCancel(){
+        this.$emit('Status',true);
       }
     }
   }
@@ -47,7 +48,7 @@
     background: $color-background-cover;
     .confirms-container {
       @include px2rem(width, 563);
-      @include px2rem(height, 174);
+      @include px2rem(height, 224);
       background: #fff;
       border: px2rem(2) solid $color-line;
       @include px2rem(border-radius, 15);
@@ -56,14 +57,24 @@
         margin-top: px2rem(30);
         width: 100%;
         @include px2rem(height, 61);
-        @include font(8);
+        @include font(5);
+        padding: 0 px2rem(30);
         box-sizing: border-box;
         border-bottom: px2rem(4) solid $color-line;
-        .msg{
-          margin-left: px2rem(30);
-        }
+        justify-content: space-between;
       }
-      .button-box {
+      .remark{
+        .remark-box{
+
+        }
+        display: flex;
+        width: 100%;
+        height:px2rem(135);
+        align-items: center;
+        justify-content: center;
+        @include font(6)
+      }
+     /* .button-box {
         display: flex;
         .button {
           display: flex;
@@ -85,7 +96,7 @@
             border-left: px2rem(4) solid $color-line;
           }
         }
-      }
+      }*/
     }
   }
 </style>

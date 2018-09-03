@@ -3,7 +3,7 @@
     <div class="message">
       <p>总数<span v-text="Total"></span></p>
       <p>总价<span v-text="Num"></span></p>
-      <p>入站备注<span  v-text="Remark"></span></p>
+      <p>入站备注<span  v-text="OrderData.remark==''?Remark:OrderData.remark"></span></p>
     </div>
     <div :class="getcolor(index)?'color list':'list'"  v-for="(n,index) in ItemData" @click="toAddDetails(n)">
       <div class="img-box">
@@ -71,6 +71,9 @@
       Arr:{
         type:Array,
         required:true
+      },
+      OrderData:{
+        type:Object
       }
     },
     created(){

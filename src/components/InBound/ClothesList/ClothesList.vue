@@ -3,7 +3,7 @@
     <head-bar></head-bar>
     <div class="body">
       <list v-bind:Items = "Items" v-bind:Remark="Remark" v-bind:SelectData="SelectData"
-            v-bind:OrderId="OrderId" v-if="Items!=''" v-bind:Arr="Arr"></list>
+            v-bind:OrderId="OrderId" v-if="Items!=''" v-bind:OrderData="OrderData" v-bind:Arr="Arr"></list>
       <remark v-if="showConfirm" v-on:Remarks="getRemarks" v-on:Remark="getRemark" v-bind:OrderId="OrderId"></remark>
       <div>
         <div class="height"></div>
@@ -156,7 +156,7 @@
       },
       toReceipt(){
         console.log(this.laundryOrderItemList)
-        this.$router.push({name: 'Receipt',params:{Items:this.OrderData,From:this.WhereFrom,laundryOrderItemList:this.laundryOrderItemList}});
+        this.$router.push({name: 'Receipt',params:{Items:this.OrderData,From:this.WhereFrom,laundryOrderItemList:this.laundryOrderItemList,remark:this.Remark}});
       },
       clikeInBound(){
         this.$alert("是否确定入站",['是','否']).then(()=>{
