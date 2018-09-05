@@ -27,74 +27,50 @@
     },
     methods: {
       print(){
-        /*console.log(this.Items);
-        let Items = this.Items;
-        let clothesList = this.clothesList;
-        let printObj={};
-        let clothes = [];
-        Items.items.forEach((item)=>{
-         clothesList.forEach((clothe)=>{
-           if(item.id===clothe.id){
-             let defect = this.filterClothesDefect(clothe.flaw);
-             let washingEffect = this.filterClothesDefect(clothe.washingEffect);
-             clothes.push({
-               clothesId:clothe.barCode,
-               clothesName:item.laundryProduct.name,
-               clothesGrade:'',
-               clothesPrice:(item.laundryProduct.price/100).toFixed(2),
-               clothesDefect:defect,
-               clothesWashingEffect:washingEffect,
-               clothesColor:''
-             })
-           }
-         })
-        });
-        printObj.orderNumber = Items.number;
-        printObj.clothingQuantity = Items.items.length;
-        printObj.clothingDate = this.getNowData();
-        printObj.takingClothingDate = this.getNowData();
-        printObj.customerName=Items.name;
-        printObj.customerPhone = Items.phone;
-        printObj.customerAddress = Items.address;
-        printObj.totalPrice = (Items.amount/100).toFixed(2);
-        printObj.servicePrice = '';
-        printObj.storeAddress=this.$token.store.address;
-        printObj.storePhone=this.$token.store.phone;
-        printObj.clerk=this.$token.store.people;
-        printObj.storeNumber=this.$token.store.number;
-        printObj.clothes = clothes;
-//TODO 打印输出
-        console.log(this.$token.store)
-       /!* this.$emit('Status','print');*!/*/
-        console.log(this.receiptData)
+        this.$loading.show('请等待...');
+        this.$emit('Status','cancels');
+        ble.print(`--------------------------------         交易单号:10001
+        衣物数量:3件
+
+        收衣日期:1998-01-01 13:22:25
+        取衣日期:2018-06-06 18:25:21
+
+        顾客签字:
+            顾客电话:1801856851
+        顾客地址:瓯海区茶山街道XXXXXXX
+
+        --------------------------------名称/条码 颜色  服务档次   价格
+        --------------------------------连衣裙(短)白色    精洗    30.00
+        |-(6651608)@瑕疵(油性污渍|洗尽量|渍迹会残留|面料发黄)
+
+        T恤       黑色    精洗    40.00
+        |-(6651609)@瑕疵(油性污渍|尽量洗|尽量洗|渍迹会残留|面料发黄)
+
+        真丝T恤   白色    精洗    40.00
+        |-(6651610)@瑕疵(面料发黄|尽量洗|油性污渍|渍迹会残留)
+        |-@附加服务(不享受折扣):
+    |-大量去渍:                70.00
+
+        交易总额:160.00元(服务费70.00元)
+        --------------------------------
+            应收金额：160.00元
+
+        本店地址：温州市瓯海区xxxxxx
+        服务热线：88668866
+        店员：XXX    店号：007
+        --------------------------------`,
+         ()=>{
+            this.$loading.hide();
+            window.alert("打印成功！");
+          },
+          (errormsg)=> {
+            this.$loading.hide();
+            window.alert(errormsg);
+          });
+
+        console.log(this.receiptData);
+
       },
-     /* filterClothesDefect(defect){
-        let defects = defect.split(',');
-        let defectString = '';
-        defects.forEach(item=>{
-          if(item){
-            defectString = defectString+item+'|';
-          }
-        });
-       return defectString.substr(0,defectString.length-1);
-      },
-      getNowData(){
-        let date = new Date();
-        let seperator1 = "-";
-        let seperator2 = ":";
-        let month = date.getMonth() + 1;
-        let strDate = date.getDate();
-        if (month >= 1 && month <= 9) {
-          month = "0" + month;
-        }
-        if (strDate >= 0 && strDate <= 9) {
-          strDate = "0" + strDate;
-        }
-        let currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
-          + " " + date.getHours() + seperator2 + date.getMinutes()
-          + seperator2 + date.getSeconds();
-        return currentdate;
-      },*/
       cancels(){
         this.$emit('Status','cancels');
       }

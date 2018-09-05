@@ -34,8 +34,9 @@
         <variable name="APP_KEY" value="60e98495e72135323235e2ab" />
     </plugin>
     <plugin name="cordova-plugin-media" spec="^3.0.1" />
+    <plugin name="cordova-plugin-bluetooth-serial" spec="^0.4.7" />
+    <plugin name="cordova-plugin-ble-central-rwl" spec="^1.3.8" />
     <engine name="ios" spec="~4.3.1" />
     <engine name="android" spec="^6.1.2" />
     <engine name="browser" spec="~4.1.0" />
-    <plugin name="cordova-plugin-bluetooth-serial" spec="^0.4.7" />
 </widget>

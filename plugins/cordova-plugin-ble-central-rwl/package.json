@@ -1,0 +1,55 @@
+{
+  "_from": "cordova-plugin-ble-central-rwl",
+  "_id": "cordova-plugin-ble-central-rwl@1.3.8",
+  "_inBundle": false,
+  "_integrity": "sha512-ae1FR0RCkkCmGRjf3wrSq4B+2mewSGT39idnwTjDeqh3HhdKNKihPoqlQQSBGbyuH8dW01b13sUfxbUoPXb+dA==",
+  "_location": "/cordova-plugin-ble-central-rwl",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "cordova-plugin-ble-central-rwl",
+    "name": "cordova-plugin-ble-central-rwl",
+    "escapedName": "cordova-plugin-ble-central-rwl",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-ble-central-rwl/-/cordova-plugin-ble-central-rwl-1.3.8.tgz",
+  "_shasum": "b56d8909593859daa1cb2ad0c928ab08d9a23ac8",
+  "_spec": "cordova-plugin-ble-central-rwl",
+  "_where": "F:\\Work\\AllowMeSiteApp",
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/timshaw9791/cordova-plugin-ble-central/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova-plugin-ble-central-rwl",
+    "platforms": [
+      "android"
+    ]
+  },
+  "deprecated": false,
+  "description": "Bluetooth Low Energy (BLE) Central Plugin-customized for rwlai",
+  "homepage": "https://github.com/timshaw9791/cordova-plugin-ble-central#readme",
+  "keywords": [
+    "bluetooth",
+    "BLE",
+    "bluetooth low energy",
+    "bluetooth smart",
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "license": "Apache 2.0",
+  "name": "cordova-plugin-ble-central-rwl",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/timshaw9791/cordova-plugin-ble-central.git"
+  },
+  "version": "1.3.8"
+}

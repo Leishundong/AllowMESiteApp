@@ -13,8 +13,8 @@ import 'common/js/flexible';
 
 import {Alert,Loading,Msg} from 'vue-mobile-element';
 Vue.use(Loading);
-Vue.prototype.$alert=Alert;
-Vue.prototype.$loading=Loading.service;
+Vue.prototype.$alert = Alert;
+Vue.prototype.$loading = Loading.service;
 Vue.prototype.$msg=Msg;
 Vue.prototype.$ajax = axios;
 Vue.prototype.$token = token;

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plugin
+    xmlns="http://www.phonegap.com/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="cordova-plugin-ble-central-rwl"
+    version="1.3.8">
+
+    <name>BLE</name>
+    <description>Bluetooth Low Energy (BLE) Central Plugin-customized for rwlai</description>
+    <license>Apache 2.0</license>
+    <keywords>bluetooth, BLE, bluetooth low energy, bluetooth smart</keywords>
+
+    <repo>https://github.com/timshaw9791/cordova-plugin-ble-central.git</repo>
+    <issue>https://github.com/timshaw9791/cordova-plugin-ble-central/issues</issue>
+
+    <dependency id="cordova-plugin-compat" version="^1.2.0" />
+
+    <js-module src="www/ble.js" name="ble">
+        <clobbers target="ble" />
+    </js-module>
+
+
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/widget">
+            <feature name="BLE">
+                <param name="android-package" value="com.megster.cordova.ble.central.BLECentralPlugin"/>
+            </feature>
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+            <uses-permission android:name="android.permission.BLUETOOTH"/>
+            <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+        </config-file>
+
+        <source-file src="src/android/BLECentralPlugin.java"
+            target-dir="src/com/megster/cordova/ble/central"/>
+        <source-file src="src/android/BlueToothService.java"
+            target-dir="src/com/megster/cordova/ble/central"/>
+        <source-file src="src/android/PrintUtils.java"
+            target-dir="src/com/megster/cordova/ble/central"/>
+
+    </platform>
+
+
+</plugin>
