@@ -16,7 +16,7 @@
           <div v-for="item in receiptData.clothes">
             <p><span>{{item.clothesName}}（<span v-text="item.clothesId"></span>）</span><span class="price" v-text="item.clothesPrice"></span></p>
             <p>-瑕疵：<span v-text="item.clothesDefect"></span></p>
-            <p>-预计洗后效果：<span v-text="item.clothesWashingEffect"></span></p>
+            <p>-预计洗后效果：<span v-text="item.washingEffect"></span></p>
           </div>
         </div>
         <p class="line-top">-----------------------------------------------------</p>
@@ -40,7 +40,7 @@
     </div>
     <div class="height"></div>
     <div class="operate" v-if="IsShow">
-      <button class="receipt" @click="checkRemark">查看备注</button><button class="receipt left" @click="toReceipt">打印发票</button>
+      <button class="receipt" @click="checkRemark">查看备注</button><div class="line"></div><button class="receipt left" @click="toReceipt">打印发票</button>
     </div>
   </div>
 </template>
@@ -110,7 +110,7 @@
                 clothesName:item.laundryProduct.name,
                 clothesPrice:(item.laundryProduct.price/100).toFixed(2),
                 clothesDefect:defect,
-                clothesWashingEffect:washingEffect,
+                washingEffect:washingEffect,
               })
             }
           })
@@ -276,13 +276,22 @@
     .operate{
       position: fixed;
       bottom: px2rem(0);
-      .left{
-        margin-left: px2rem(3);
+      width: 100%;
+      background: white;
+      z-index: 1;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      .line{
+        height: 100%;
+        width: px2rem(1);
+        background: #d1d6ff;
+        z-index: 5;
       }
       .receipt{
         color: white;
         float: left;
-        width: px2rem(373);
+        width:49.8%;
         height: px2rem(90);
         background: $color-background-general;
         @include font(5);

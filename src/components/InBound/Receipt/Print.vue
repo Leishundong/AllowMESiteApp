@@ -29,36 +29,54 @@
       print(){
         this.$loading.show('请等待...');
         this.$emit('Status','cancels');
-        ble.print(`--------------------------------         交易单号:10001
-        衣物数量:3件
+        let receiptData = this.receiptData;
+        let checkLetterCount=(str)=>{
+          if(!str) return 0;
+          let count=0;
+          for (let codePoint of str) {
+            count+=(/[^\u4e00-\u9fa5]/).test(codePoint)?1:2;
+          }
+          return count;
+        };
+        let clothesinfo = receiptData.clothes.reduce( (prev, cur)=>{
+          let iteminfo = cur.clothesName + "(" + cur.clothesId + ")";
+          let priceinfo = "" + (cur.clothesPrice);
 
-        收衣日期:1998-01-01 13:22:25
-        取衣日期:2018-06-06 18:25:21
+          return prev + '\n' + iteminfo + ' '.repeat(32 - checkLetterCount(iteminfo) - priceinfo.length) + priceinfo
+            + "\n" + "瑕疵："+" "+cur.clothesDefect + "\n" +"洗后效果："+" "+ cur.washingEffect
+        }, '');
 
-        顾客签字:
-            顾客电话:1801856851
-        顾客地址:瓯海区茶山街道XXXXXXX
 
-        --------------------------------名称/条码 颜色  服务档次   价格
-        --------------------------------连衣裙(短)白色    精洗    30.00
-        |-(6651608)@瑕疵(油性污渍|洗尽量|渍迹会残留|面料发黄)
+        let printstr = `--------------------------------
+交易单号:${receiptData.orderNumber}
+服务热线:400-0878-315
+本店地址:${receiptData.storeAddress}
+服务内容:${receiptData.serviceContent}
+衣物详情
+--------------------------------
+名称/衣物条码               价格
+${clothesinfo}
+--------------------------------
+总数:${receiptData.clothingQuantity}件
+总价:${receiptData.totalPrice}元
+--------------------------------
+收单时间:${receiptData.singleTime}
+收单人:${receiptData.clerk}
+用户姓名:${receiptData.customerName}
+收单地址:${receiptData.customerAddress}
+联系方式:${receiptData.customerPhone}
+--------------------------------
+           莫好克温馨提示：
+1、凭票取衣，此单遗失请立即到店挂失，以免被他人领取。
+2、超过2000元的贵重衣服请选择保值洗涤。
+3、衣服送洗请自行掏清口袋东西以免发生纠纷。
+4、超过六个月未取取衣物，本店将不通知客户，自行处理。取衣时请当面确认洗涤质量、数量，有异议请当面提出。谢谢合作！
 
-        T恤       黑色    精洗    40.00
-        |-(6651609)@瑕疵(油性污渍|尽量洗|尽量洗|渍迹会残留|面料发黄)
 
-        真丝T恤   白色    精洗    40.00
-        |-(6651610)@瑕疵(面料发黄|尽量洗|油性污渍|渍迹会残留)
-        |-@附加服务(不享受折扣):
-    |-大量去渍:                70.00
-
-        交易总额:160.00元(服务费70.00元)
-        --------------------------------
-            应收金额：160.00元
-
-        本店地址：温州市瓯海区xxxxxx
-        服务热线：88668866
-        店员：XXX    店号：007
-        --------------------------------`,
+`;
+        console.log(printstr);
+        alert(printstr);
+        ble.print(printstr,
          ()=>{
             this.$loading.hide();
             window.alert("打印成功！");
@@ -67,8 +85,6 @@
             this.$loading.hide();
             window.alert(errormsg);
           });
-
-        console.log(this.receiptData);
 
       },
       cancels(){

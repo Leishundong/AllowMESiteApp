@@ -8,7 +8,7 @@
       <div>
         <div class="height "></div>
         <div class="operate ">
-          <button class="btn-submit" @click="okToDetails">完成编辑</button>
+          <button class="btn-submit" @click="toVilateCode">完成编辑</button>
         </div>
       </div>
     </div>
@@ -20,6 +20,7 @@
   import ClothesDetails from './ClothesDetails.vue'
   import DetailsImage from './DetailsImage.vue'
   import FootBar from '../../Common/FootBar.vue'
+  import SrcData from  "../../../json/src.json"
   export default {
     name:'AddDetails',
     components:{
@@ -179,11 +180,11 @@
           this.$alert('请先拍照')
         }
         if(this.OrderId.indexOf("A03")==-1){
-            obj={
-              id:this.ClothesItem.id,
-              image:img.substring(0,img.length - 1),
-              problemImage: problemImage.substring(0,problemImage.length - 1)
-            };
+          obj={
+            id:this.ClothesItem.id,
+            image:img.substring(0,img.length - 1),
+            problemImage: problemImage.substring(0,problemImage.length - 1)
+          };
         }else {
           obj={
             id:this.ClothesItem.id,
@@ -195,10 +196,25 @@
             problemImage: problemImage.substring(0,problemImage.length - 1)
           };
         }
-       this.$alert('确定完成编辑？',['确定','取消']).then(()=>{
+        this.$alert('确定完成编辑？',['确定','取消']).then(()=>{
           console.log(obj);
-         this.$router.push({name:'ClothesList',params:{Obj:obj}})
-       })
+          this.$router.push({name:'ClothesList',params:{Obj:obj}})
+        })
+      },
+      toVilateCode(){
+        let src = SrcData.LinkerSrc.AtAll.Http+SrcData.LinkerSrc.distinctbarcode.http;
+        this.$ajax({
+          method:'post',
+          url: src,
+          headers: {'x-auth-token': this.$token.token},
+          params:{barcode:this.BarCode},
+        }).then(res=>{
+        if(res.data.code == '20017'){
+            this.$msg.setShow('存在重复条形码')
+        }else if(res.data.code == '0'){
+          this.okToDetails()
+        }
+        })
       }
     }
   }

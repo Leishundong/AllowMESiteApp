@@ -56,6 +56,9 @@
     },
     "storeFindOne":{
       "http":"/rwlmall/store/findone"
+    },
+    "distinctbarcode":{
+      "http":"/rwlmall/laundryorder/distinctbarcode"
     }
   }
 }

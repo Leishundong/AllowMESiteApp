@@ -147,6 +147,7 @@
             this.$msg.setShow('数据异常，请重试')
           }
         }).catch(res=>{
+          console.log('ssss',res);
           this.$alert(res.response.data.msg).then(()=>{
             if(res.response.data.code == '1'){
               this.$router.push({name:'Login'})
@@ -155,7 +156,6 @@
         })
       },
       toReceipt(){
-        console.log(this.laundryOrderItemList)
         this.$router.push({name: 'Receipt',params:{Items:this.OrderData,From:this.WhereFrom,laundryOrderItemList:this.laundryOrderItemList,remark:this.Remark}});
       },
       clikeInBound(){
