@@ -159,9 +159,33 @@
         this.$router.push({name: 'Receipt',params:{Items:this.OrderData,From:this.WhereFrom,laundryOrderItemList:this.laundryOrderItemList,remark:this.Remark}});
       },
       clikeInBound(){
-        this.$alert("是否确定入站",['是','否']).then(()=>{
-          this.inBound()
-        })
+        let flag = true;
+        let msg = '';
+        if(this.laundryOrderItemList.length!=this.OrderData.items.length){
+          flag = false;
+          msg = '入站数据不完全'
+        }
+        if(flag){
+          if(this.laundryOrderItemList){
+            this.laundryOrderItemList.forEach(item=>{
+              if(item.barCode==''){
+                flag = false;
+                msg = '条形码为空'
+              }
+            })
+          }
+        }
+        if(this.OrderId.indexOf("A03")==-1){
+          flag = true
+        }
+        if(flag){
+          this.$alert("是否确定入站",['是','否']).then(()=>{
+           this.inBound()
+          })
+        }else {
+          this.$msg.setShow(msg);
+        }
+
       },
       getRemarks(data){
         this.showConfirm=data

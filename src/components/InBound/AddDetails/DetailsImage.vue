@@ -6,17 +6,34 @@
       <p>{{Msg}}</p>
       <input  class="note" :placeholder="Message" v-model="Remarks" @blur="remarks" v-if="isShow"/>
     </div>
-    <div v-for="(n,index) in parseInt(6)" v-if="relond">
-      <div class="img" @click="">
-        <div class="box" @click="clikImg(index)">
-          <i class="iconfont icon-weibiaoti1 imgcom"></i>
+    <div v-if="isShow">
+      <div v-for="(n,index) in 6" v-if="relond">
+        <div class="img" @click="">
+          <div class="box" @click="clikImg(index)">
+            <i class="iconfont icon-weibiaoti1 imgcom"></i>
+          </div>
+          <input type="file" name="file" @change="PreviewImage" class="input" :id="index"/>
+          <img :src="imageUrl[index].src" alt="" class="fileImg"  v-if="imageUrl[index]!=null" @click="clikImg(index)">
+          <input v-if="checkShow"  class="checkBox" type="checkbox" :checked="imageUrl[index]!=null?imageUrl[index].pro:false"  @click="checks(index)" :disabled="imageUrl[index]==null" /><span v-if="checkShow" class="p">注意问题</span>
         </div>
-        <input type="file" name="file" @change="PreviewImage" class="input" :id="index"/>
-        <img :src="imageUrl[index].src" alt="" class="fileImg"  v-if="imageUrl[index]!=null" @click="clikImg(index)">
-        <input v-if="checkShow"  class="checkBox" type="checkbox" :checked="imageUrl[index]!=null?imageUrl[index].pro:false"  @click="checks(index)" :disabled="imageUrl[index]==null" /><span v-if="checkShow" class="p">注意问题</span>
       </div>
     </div>
-    <div class="msg">
+    <div v-if="!isShow">
+      <div v-for="(n,index) in 1" v-if="relond">
+        <div class="img" @click="">
+          <div class="box" @click="clikImg(index)">
+            <i class="iconfont icon-weibiaoti1 imgcom"></i>
+          </div>
+          <input type="file" name="file" @change="PreviewImage" class="input" :id="index"/>
+          <img :src="imageUrl[index].src" alt="" class="fileImg"  v-if="imageUrl[index]!=null" @click="clikImg(index)">
+          <input v-if="checkShow"  class="checkBox" type="checkbox" :checked="imageUrl[index]!=null?imageUrl[index].pro:false"  @click="checks(index)" :disabled="imageUrl[index]==null" /><span v-if="checkShow" class="p">注意问题</span>
+        </div>
+      </div>
+    </div>
+    <div class="msg-two" v-if="!isShow">
+      <p>加载图片与网络有关请耐心等待</p>
+    </div>
+    <div class="msg" v-if="isShow">
       <p>加载图片与网络有关请耐心等待</p>
     </div>
   </div>
@@ -241,11 +258,15 @@
              this.$msg.setShow('数据异常，请重试')
            }
          }).catch((res)=>{
-           this.$alert(res.response.data.msg).then(()=>{
-             if(res.response.data.code == '1'){
-               this.$router.push({name:'Login'})
-             }
-           });
+           if(res.response!=null){
+             this.$alert(res.response.data.msg).then(()=>{
+               if(res.response.data.code == '1'){
+                 this.$router.push({name:'Login'})
+               }
+             })
+           }else {
+             this.$alert('网络错误，请切换流量后重试')
+           }
          })
       },
      /* isAjax(file){
@@ -326,6 +347,16 @@
     line-height: px2rem(200);
     color: $color-background-general;
     top: px2rem(10);
+    @include font(8)
+  }
+  .msg-two{
+    text-align: center;
+    align-items: center;
+    line-height: px2rem(200);
+    margin-left: px2rem(55);
+    position: absolute;
+    color: $color-background-general;
+    bottom: px2rem(30);
     @include font(8)
   }
   .img-box{

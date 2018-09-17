@@ -8,7 +8,7 @@
       <div>
         <div class="height "></div>
         <div class="operate ">
-          <button class="btn-submit" @click="toVilateCode">完成编辑</button>
+          <button class="btn-submit" @click="okToDetails">完成编辑</button>
         </div>
       </div>
     </div>
@@ -165,43 +165,46 @@
         this.Remark = data;
       },
       okToDetails(){
-        let obj = {};
-        let img = '';
-        let problemImage = '';
-        if(this.SrcData!=''){
-          this.SrcData.forEach((item,index)=>{
-            if(item.pro==false){
-              img = img+item.src+','
-            }else if(item.pro==true){
-              problemImage = problemImage+item.src+','
-            }
-          });
+        if(this.BarCode!=''||this.BarCode.length==7||this.OrderId.indexOf("A03")==-1){
+          let obj = {};
+          let img = '';
+          let problemImage = '';
+          if(this.SrcData!=''){
+            this.SrcData.forEach((item,index)=>{
+              if(item.pro==false){
+                img = img+item.src+','
+              }else if(item.pro==true){
+                problemImage = problemImage+item.src+','
+              }
+            });
+          }else {
+            this.$alert('请先拍照')
+          }
+          if(this.OrderId.indexOf("A03")==-1){
+            obj={
+              id:this.ClothesItem.id,
+              image:img.substring(0,img.length - 1),
+              problemImage: problemImage.substring(0,problemImage.length - 1)
+            };
+          }else {
+            obj={
+              id:this.ClothesItem.id,
+              barCode:this.BarCode,
+              flaw:this.Before,
+              washingEffect:this.After,
+              remark:this.Remark,
+              image:img.substring(0,img.length - 1),
+              problemImage: problemImage.substring(0,problemImage.length - 1)
+            };
+          }
+          this.$alert('确定完成编辑？',['确定','取消']).then(()=>{
+            this.$router.push({name:'ClothesList',params:{Obj:obj}})
+          })
         }else {
-          this.$alert('请先拍照')
+          this.$msg.setShow('条形码不能为空或异常')
         }
-        if(this.OrderId.indexOf("A03")==-1){
-          obj={
-            id:this.ClothesItem.id,
-            image:img.substring(0,img.length - 1),
-            problemImage: problemImage.substring(0,problemImage.length - 1)
-          };
-        }else {
-          obj={
-            id:this.ClothesItem.id,
-            barCode:this.BarCode,
-            flaw:this.Before,
-            washingEffect:this.After,
-            remark:this.Remark,
-            image:img.substring(0,img.length - 1),
-            problemImage: problemImage.substring(0,problemImage.length - 1)
-          };
-        }
-        this.$alert('确定完成编辑？',['确定','取消']).then(()=>{
-          console.log(obj);
-          this.$router.push({name:'ClothesList',params:{Obj:obj}})
-        })
       },
-      toVilateCode(){
+     /* toVilateCode(){
         let src = SrcData.LinkerSrc.AtAll.Http+SrcData.LinkerSrc.distinctbarcode.http;
         this.$ajax({
           method:'post',
@@ -215,7 +218,7 @@
           this.okToDetails()
         }
         })
-      }
+      }*/
     }
   }
 </script>
